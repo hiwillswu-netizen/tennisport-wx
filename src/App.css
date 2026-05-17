@@ -1,0 +1,82 @@
+/* Mobile-specific styles */
+@tailwind utilities;
+
+@layer utilities {
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .border-3 {
+    border-width: 3px;
+  }
+}
+
+/* Smooth transitions for mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Active state for buttons */
+button:active {
+  opacity: 0.85;
+}
+
+/* Leaflet popup styles */
+.venue-popup .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.venue-popup .leaflet-popup-content {
+  margin: 0;
+  padding: 0;
+}
+
+.venue-popup .leaflet-popup-tip {
+  background: white;
+}
+
+/* Custom marker animation */
+.custom-marker {
+  transition: transform 0.2s ease;
+}
+
+/* Fix leaflet container */
+.leaflet-container {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Hide leaflet attribution on small screens to save space */
+@media (max-width: 375px) {
+  .leaflet-control-attribution {
+    font-size: 8px !important;
+    max-width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Hide Kimi Agent floating button */
+[id*="kimi-agent"],
+[class*="kimi-agent"],
+[id*="kimi_agent"],
+[class*="kimi_agent"],
+[id*="kimi-plugin"],
+[class*="kimi-plugin"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
