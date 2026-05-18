@@ -1,0 +1,96 @@
+<!--pages/venues/venues.wxml-->
+<view class="container">
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <view class="filter-item {{currentFilter === 'all' ? 'active' : ''}}" bindtap="setFilter" data-type="all">
+      全部
+    </view>
+    <view class="filter-item {{currentFilter === '室内' ? 'active' : ''}}" bindtap="setFilter" data-type="室内">
+      室内
+    </view>
+    <view class="filter-item {{currentFilter === '室外' ? 'active' : ''}}" bindtap="setFilter" data-type="室外">
+      室外
+    </view>
+  </view>
+
+  <!-- 区域筛选 -->
+  <view class="district-filter">
+    <scroll-view class="district-scroll" scroll-x>
+      <view 
+        class="district-item {{currentDistrict === '' ? 'active' : ''}}" 
+        bindtap="setDistrict" 
+        data-district=""
+      >
+        全部区域
+      </view>
+      <view 
+        wx:for="{{districts}}" 
+        wx:key="*this"
+        class="district-item {{currentDistrict === item ? 'active' : ''}}" 
+        bindtap="setDistrict" 
+        data-district="{{item}}"
+      >
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 场馆列表 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <view wx:elif="{{venues.length === 0}}" class="empty-state">
+    <text>暂无符合条件的场馆</text>
+  </view>
+
+  <scroll-view 
+    wx:else 
+    class="venue-scroll" 
+    scroll-y 
+    bindscrolltolower="loadMore"
+    refresher-enabled
+    bindrefresherrefresh="onRefresh"
+    refresher-triggered="{{refreshing}}"
+  >
+    <view 
+      class="venue-card" 
+      wx:for="{{venues}}" 
+      wx:key="_id"
+      bindtap="goToDetail"
+      data-id="{{item._id}}"
+    >
+      <view class="venue-main">
+        <view class="venue-name">{{item.name}}</view>
+        <view class="venue-address">
+          <text class="address-icon">📍</text>
+          {{item.address}}
+        </view>
+        <view class="venue-meta">
+          <view class="venue-tags">
+            <text class="tag {{item.type === '室内' ? 'tag-indoor' : 'tag-outdoor'}}">{{item.type}}</text>
+            <text class="tag tag-default">{{item.courtType}}</text>
+            <text class="tag tag-default">{{item.district}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="venue-extra">
+        <view class="venue-price" wx:if="{{item.priceWeekday}}">
+          <text class="price-value">{{item.priceWeekday}}</text>
+          <text class="price-label">工作日</text>
+        </view>
+        <view class="venue-courts" wx:if="{{item.courtsCount}}">
+          <text class="courts-value">{{item.courtsCount}}</text>
+          <text class="courts-label">片场地</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="load-more" wx:if="{{hasMore}}">
+      <text class="loading-text">加载更多...</text>
+    </view>
+    <view class="no-more" wx:if="{{!hasMore && venues.length > 0}}">
+      <text>— 已经到底了 —</text>
+    </view>
+  </scroll-view>
+</view>

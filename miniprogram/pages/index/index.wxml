@@ -1,0 +1,137 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <image class="search-icon" src="/images/icon-search.png" mode="aspectFit"></image>
+      <input 
+        class="search-input" 
+        placeholder="搜索场馆名称或地址" 
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        confirm-type="search"
+        bindconfirm="onSearch"
+      />
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-actions">
+    <view class="action-item" bindtap="goToVenues">
+      <view class="action-icon venue-icon">
+        <text class="icon-text">T</text>
+      </view>
+      <text class="action-text">找场馆</text>
+    </view>
+    <view class="action-item" bindtap="goToMatches">
+      <view class="action-icon match-icon">
+        <text class="icon-text">P</text>
+      </view>
+      <text class="action-text">找球友</text>
+    </view>
+    <view class="action-item" bindtap="goToPublish">
+      <view class="action-icon publish-icon">
+        <text class="icon-text">+</text>
+      </view>
+      <text class="action-text">发约球</text>
+    </view>
+    <view class="action-item" bindtap="goToProfile">
+      <view class="action-icon profile-icon">
+        <text class="icon-text">M</text>
+      </view>
+      <text class="action-text">我的</text>
+    </view>
+  </view>
+
+  <!-- 热门场馆 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">热门场馆</text>
+      <text class="section-more" bindtap="goToVenues">查看全部 ></text>
+    </view>
+    
+    <view wx:if="{{loading}}" class="loading">
+      <text class="loading-text">加载中...</text>
+    </view>
+    
+    <view wx:elif="{{venues.length === 0}}" class="empty-state">
+      <text>暂无场馆数据</text>
+    </view>
+    
+    <view wx:else class="venue-list">
+      <view 
+        class="venue-card" 
+        wx:for="{{venues}}" 
+        wx:key="_id"
+        bindtap="goToVenueDetail"
+        data-id="{{item._id}}"
+      >
+        <view class="venue-info">
+          <view class="venue-name">{{item.name}}</view>
+          <view class="venue-address">{{item.address}}</view>
+          <view class="venue-tags">
+            <text class="tag {{item.type === '室内' ? 'tag-indoor' : 'tag-outdoor'}}">{{item.type}}</text>
+            <text class="tag tag-default">{{item.courtType}}</text>
+            <text class="tag tag-default" wx:if="{{item.courtsCount}}">{{item.courtsCount}}片场地</text>
+          </view>
+          <view class="venue-price" wx:if="{{item.priceWeekday}}">
+            <text class="price-label">参考价：</text>
+            <text class="price-value">{{item.priceWeekday}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最新约球 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">最新约球</text>
+      <text class="section-more" bindtap="goToMatches">查看全部 ></text>
+    </view>
+    
+    <view wx:if="{{matchesLoading}}" class="loading">
+      <text class="loading-text">加载中...</text>
+    </view>
+    
+    <view wx:elif="{{matches.length === 0}}" class="empty-state">
+      <text>暂无约球信息，快来发布第一个吧！</text>
+      <button class="btn-primary publish-btn" bindtap="goToPublish">发布约球</button>
+    </view>
+    
+    <view wx:else class="match-list">
+      <view 
+        class="match-card" 
+        wx:for="{{matches}}" 
+        wx:key="_id"
+        bindtap="goToMatchDetail"
+        data-id="{{item._id}}"
+      >
+        <view class="match-header">
+          <image class="match-avatar" src="{{item.userAvatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+          <view class="match-user-info">
+            <text class="match-nickname">{{item.userNickname || '网球爱好者'}}</text>
+            <text class="match-time">{{item.createTimeStr}}</text>
+          </view>
+          <view class="match-status {{item.status === 'open' ? 'status-open' : 'status-closed'}}">
+            {{item.status === 'open' ? '招募中' : '已满员'}}
+          </view>
+        </view>
+        <view class="match-content">
+          <view class="match-info-row">
+            <text class="info-label">时间：</text>
+            <text class="info-value">{{item.matchDate}} {{item.matchTime}}</text>
+          </view>
+          <view class="match-info-row">
+            <text class="info-label">地点：</text>
+            <text class="info-value">{{item.venueName}}</text>
+          </view>
+          <view class="match-info-row" wx:if="{{item.remark}}">
+            <text class="info-label">备注：</text>
+            <text class="info-value">{{item.remark}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,87 @@
+<!--pages/matches/matches.wxml-->
+<view class="container">
+  <!-- 顶部操作栏 -->
+  <view class="top-bar">
+    <view class="tab-bar">
+      <view class="tab-item {{currentTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">
+        全部约球
+      </view>
+      <view class="tab-item {{currentTab === 'mine' ? 'active' : ''}}" bindtap="switchTab" data-tab="mine">
+        我的约球
+      </view>
+    </view>
+    <view class="publish-btn" bindtap="goToPublish">
+      <text>+ 发布</text>
+    </view>
+  </view>
+
+  <!-- 约球列表 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <view wx:elif="{{matches.length === 0}}" class="empty-state">
+    <text>{{currentTab === 'mine' ? '您还没有发布过约球' : '暂无约球信息'}}</text>
+    <button class="btn-primary publish-btn-empty" bindtap="goToPublish">发布约球</button>
+  </view>
+
+  <scroll-view 
+    wx:else 
+    class="match-scroll" 
+    scroll-y
+    bindscrolltolower="loadMore"
+    refresher-enabled
+    bindrefresherrefresh="onRefresh"
+    refresher-triggered="{{refreshing}}"
+  >
+    <view 
+      class="match-card" 
+      wx:for="{{matches}}" 
+      wx:key="_id"
+      bindtap="goToDetail"
+      data-id="{{item._id}}"
+    >
+      <view class="match-header">
+        <image class="match-avatar" src="{{item.userAvatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="match-user-info">
+          <text class="match-nickname">{{item.userNickname || '网球爱好者'}}</text>
+          <text class="match-publish-time">{{item.createTimeStr}}</text>
+        </view>
+        <view class="match-status {{item.status === 'open' ? 'status-open' : 'status-closed'}}">
+          {{item.status === 'open' ? '招募中' : '已满员'}}
+        </view>
+      </view>
+
+      <view class="match-body">
+        <view class="match-datetime">
+          <text class="datetime-icon">📅</text>
+          <text class="datetime-text">{{item.matchDate}} {{item.matchTime}}</text>
+        </view>
+        <view class="match-venue">
+          <text class="venue-icon">📍</text>
+          <text class="venue-text">{{item.venueName || '待定'}}</text>
+        </view>
+        <view class="match-remark" wx:if="{{item.remark}}">
+          <text class="remark-text">{{item.remark}}</text>
+        </view>
+      </view>
+
+      <view class="match-footer">
+        <view class="match-people">
+          <text class="people-label">人数：</text>
+          <text class="people-value">{{item.currentPeople || 1}}/{{item.needPeople || 4}}</text>
+        </view>
+        <view class="match-level" wx:if="{{item.level}}">
+          <text class="level-tag">{{item.level}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="load-more" wx:if="{{hasMore}}">
+      <text class="loading-text">加载更多...</text>
+    </view>
+    <view class="no-more" wx:if="{{!hasMore && matches.length > 0}}">
+      <text>— 已经到底了 —</text>
+    </view>
+  </scroll-view>
+</view>

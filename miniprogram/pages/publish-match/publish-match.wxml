@@ -1,0 +1,90 @@
+<!--pages/publish-match/publish-match.wxml-->
+<view class="container">
+  <view class="form-card">
+    <!-- 活动时间 -->
+    <view class="form-item">
+      <view class="form-label required">活动日期</view>
+      <picker mode="date" value="{{matchDate}}" start="{{today}}" bindchange="onDateChange">
+        <view class="form-input picker">
+          <text class="{{matchDate ? '' : 'placeholder'}}">{{matchDate || '请选择日期'}}</text>
+          <text class="arrow">></text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label required">活动时间</view>
+      <picker mode="time" value="{{matchTime}}" bindchange="onTimeChange">
+        <view class="form-input picker">
+          <text class="{{matchTime ? '' : 'placeholder'}}">{{matchTime || '请选择时间'}}</text>
+          <text class="arrow">></text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 活动地点 -->
+    <view class="form-item">
+      <view class="form-label required">活动地点</view>
+      <picker mode="selector" range="{{venueList}}" range-key="name" bindchange="onVenueChange">
+        <view class="form-input picker">
+          <text class="{{venueName ? '' : 'placeholder'}}">{{venueName || '请选择场馆'}}</text>
+          <text class="arrow">></text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 需要人数 -->
+    <view class="form-item">
+      <view class="form-label required">需要人数</view>
+      <picker mode="selector" range="{{peopleOptions}}" bindchange="onPeopleChange">
+        <view class="form-input picker">
+          <text>{{needPeople}} 人</text>
+          <text class="arrow">></text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 球友水平 -->
+    <view class="form-item">
+      <view class="form-label">球友水平</view>
+      <picker mode="selector" range="{{levelOptions}}" bindchange="onLevelChange">
+        <view class="form-input picker">
+          <text class="{{level ? '' : 'placeholder'}}">{{level || '不限'}}</text>
+          <text class="arrow">></text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 费用说明 -->
+    <view class="form-item">
+      <view class="form-label">费用说明</view>
+      <input 
+        class="form-input" 
+        placeholder="如：AA制，人均50元"
+        value="{{fee}}"
+        bindinput="onFeeInput"
+      />
+    </view>
+
+    <!-- 备注 -->
+    <view class="form-item">
+      <view class="form-label">备注说明</view>
+      <textarea 
+        class="form-textarea"
+        placeholder="补充说明，如：需自备球拍，有球提供等"
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+        maxlength="200"
+      />
+      <text class="char-count">{{remark.length}}/200</text>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button class="submit-btn" bindtap="submitMatch" loading="{{submitting}}">
+      发布约球
+    </button>
+    <text class="submit-tip">发布后可在"我的约球"中管理</text>
+  </view>
+</view>

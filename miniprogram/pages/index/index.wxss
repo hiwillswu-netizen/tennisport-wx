@@ -1,0 +1,231 @@
+/* pages/index/index.wxss */
+.search-bar {
+  padding: 20rpx;
+  background-color: #16a34a;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 40rpx;
+  padding: 16rpx 24rpx;
+}
+
+.search-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 16rpx;
+  opacity: 0.5;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 快捷入口 */
+.quick-actions {
+  display: flex;
+  justify-content: space-around;
+  padding: 32rpx 20rpx;
+  background-color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.action-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+}
+
+.icon-text {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.venue-icon {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+}
+
+.match-icon {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.publish-icon {
+  background: linear-gradient(135deg, #ea580c, #f97316);
+}
+
+.profile-icon {
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 区块样式 */
+.section {
+  margin-bottom: 20rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 24rpx 16rpx;
+  background-color: #fff;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.section-more {
+  font-size: 26rpx;
+  color: #16a34a;
+}
+
+/* 场馆卡片 */
+.venue-list {
+  padding: 0 20rpx;
+  background-color: #fff;
+}
+
+.venue-card {
+  padding: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.venue-card:last-child {
+  border-bottom: none;
+}
+
+.venue-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.venue-address {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.venue-tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 12rpx;
+}
+
+.venue-price {
+  font-size: 26rpx;
+}
+
+.price-label {
+  color: #999;
+}
+
+.price-value {
+  color: #ea580c;
+  font-weight: 500;
+}
+
+/* 约球卡片 */
+.match-list {
+  padding: 0 20rpx;
+  background-color: #fff;
+}
+
+.match-card {
+  padding: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.match-card:last-child {
+  border-bottom: none;
+}
+
+.match-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.match-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+}
+
+.match-user-info {
+  flex: 1;
+}
+
+.match-nickname {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.match-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.match-status {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.status-open {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.status-closed {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.match-content {
+  padding-left: 88rpx;
+}
+
+.match-info-row {
+  margin-bottom: 8rpx;
+  font-size: 26rpx;
+}
+
+.info-label {
+  color: #999;
+}
+
+.info-value {
+  color: #333;
+}
+
+.publish-btn {
+  margin-top: 24rpx;
+  width: 240rpx !important;
+}

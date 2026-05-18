@@ -1,0 +1,107 @@
+<!--pages/match-detail/match-detail.wxml-->
+<view class="container" wx:if="{{match}}">
+  <!-- 发起人信息 -->
+  <view class="user-section">
+    <image class="user-avatar" src="{{match.userAvatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+    <view class="user-info">
+      <text class="user-nickname">{{match.userNickname || '网球爱好者'}}</text>
+      <text class="publish-time">发布于 {{match.createTimeStr}}</text>
+    </view>
+    <view class="match-status {{match.status === 'open' ? 'status-open' : 'status-closed'}}">
+      {{match.status === 'open' ? '招募中' : '已满员'}}
+    </view>
+  </view>
+
+  <!-- 约球信息 -->
+  <view class="info-card">
+    <view class="info-item">
+      <view class="info-icon">📅</view>
+      <view class="info-content">
+        <text class="info-label">活动时间</text>
+        <text class="info-value">{{match.matchDate}} {{match.matchTime}}</text>
+      </view>
+    </view>
+
+    <view class="info-item" bindtap="goToVenue" data-id="{{match.venueId}}">
+      <view class="info-icon">📍</view>
+      <view class="info-content">
+        <text class="info-label">活动地点</text>
+        <text class="info-value link">{{match.venueName || '待定'}} ></text>
+      </view>
+    </view>
+
+    <view class="info-item">
+      <view class="info-icon">👥</view>
+      <view class="info-content">
+        <text class="info-label">人数</text>
+        <text class="info-value">{{match.currentPeople || 1}} / {{match.needPeople || 4}} 人</text>
+      </view>
+    </view>
+
+    <view class="info-item" wx:if="{{match.level}}">
+      <view class="info-icon">🎾</view>
+      <view class="info-content">
+        <text class="info-label">球友水平</text>
+        <text class="info-value">{{match.level}}</text>
+      </view>
+    </view>
+
+    <view class="info-item" wx:if="{{match.fee}}">
+      <view class="info-icon">💰</view>
+      <view class="info-content">
+        <text class="info-label">费用</text>
+        <text class="info-value">{{match.fee}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 备注信息 -->
+  <view class="remark-card" wx:if="{{match.remark}}">
+    <view class="card-title">备注说明</view>
+    <text class="remark-content">{{match.remark}}</text>
+  </view>
+
+  <!-- 参与者列表 -->
+  <view class="participants-card" wx:if="{{participants.length > 0}}">
+    <view class="card-title">已报名 ({{participants.length}})</view>
+    <view class="participants-list">
+      <view class="participant-item" wx:for="{{participants}}" wx:key="_id">
+        <image class="participant-avatar" src="{{item.userAvatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <text class="participant-name">{{item.userNickname || '球友'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="action-bar">
+    <button class="action-btn share-btn" bindtap="shareMatch" open-type="share">
+      分享
+    </button>
+    <button 
+      class="action-btn join-btn" 
+      wx:if="{{!isOwner && match.status === 'open' && !hasJoined}}"
+      bindtap="joinMatch"
+    >
+      我要报名
+    </button>
+    <button 
+      class="action-btn joined-btn" 
+      wx:if="{{hasJoined && !isOwner}}"
+      disabled
+    >
+      已报名
+    </button>
+    <button 
+      class="action-btn manage-btn" 
+      wx:if="{{isOwner}}"
+      bindtap="manageMatch"
+    >
+      管理
+    </button>
+  </view>
+</view>
+
+<!-- 加载状态 -->
+<view class="loading-container" wx:if="{{loading}}">
+  <text class="loading-text">加载中...</text>
+</view>
