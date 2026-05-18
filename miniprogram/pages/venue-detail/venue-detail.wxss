@@ -23,11 +23,25 @@ page {
   right: 0;
   bottom: 0;
   opacity: 0.15;
+  /* 网球网纹理效果 - 横竖交叉的网格线 */
   background-image: 
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 2rpx, transparent 2rpx),
-    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.3) 2rpx, transparent 2rpx),
-    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.3) 2rpx, transparent 2rpx);
-  background-size: 80rpx 80rpx;
+    /* 横线 */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28rpx,
+      rgba(255,255,255,0.6) 28rpx,
+      rgba(255,255,255,0.6) 30rpx
+    ),
+    /* 竖线 */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 28rpx,
+      rgba(255,255,255,0.6) 28rpx,
+      rgba(255,255,255,0.6) 30rpx
+    );
+  background-size: 30rpx 30rpx;
 }
 
 .banner-content {

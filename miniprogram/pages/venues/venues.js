@@ -250,7 +250,7 @@ Page({
           height: 36,
           iconPath: isIndoor ? '/images/marker-tennis-indoor.png' : '/images/marker-tennis-outdoor.png',
           callout: {
-            content: `${venue.name}\n${venue.priceWeekday || '价格待定'}`,
+            content: venue.name,
             color: '#333333',
             fontSize: 13,
             borderRadius: 8,
