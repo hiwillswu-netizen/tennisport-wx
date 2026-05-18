@@ -11,7 +11,13 @@ Page({
     hasMore: true,
     page: 0,
     pageSize: 10,
-    filters: {}
+    filters: {},
+    // WeUI tabs 数据
+    matchTabs: [
+      { title: '全部约球' },
+      { title: '我的约球' }
+    ],
+    activeTabIndex: 0
   },
 
   onLoad: function () {
@@ -179,6 +185,23 @@ Page({
       } else {
         this.loadMatches(true);
       }
+    }
+  },
+
+  // WeUI tabs 点击事件
+  onTabClick: function (e) {
+    const index = e.detail.index;
+    const tab = index === 0 ? 'all' : 'mine';
+    
+    this.setData({ 
+      activeTabIndex: index,
+      currentTab: tab 
+    });
+
+    if (tab === 'mine') {
+      this.loadMyMatches();
+    } else {
+      this.loadMatches(true);
     }
   },
 

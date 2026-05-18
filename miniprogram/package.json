@@ -1,0 +1,8 @@
+{
+  "name": "tennisfind-miniprogram",
+  "version": "1.0.0",
+  "description": "TennisFind 小程序",
+  "dependencies": {
+    "weui-miniprogram": "^1.3.0"
+  }
+}

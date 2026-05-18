@@ -9,7 +9,7 @@
         <text class="user-id" wx:if="{{openid}}">ID: {{openid.slice(-8)}}</text>
       </view>
     </view>
-    <view class="user-card login-card" wx:else bindtap="getUserProfile">
+    <view class="user-card login-card" wx:else bindtap="getUserProfile" hover-class="user-card-hover">
       <view class="login-avatar">
         <text class="login-icon">👤</text>
       </view>
@@ -17,21 +17,23 @@
         <text class="login-text">点击登录</text>
         <text class="login-tip">登录后享受更多功能</text>
       </view>
-      <text class="login-arrow">></text>
+      <text class="login-arrow">›</text>
     </view>
   </view>
 
   <!-- 我的数据 -->
   <view class="stats-section">
-    <view class="stats-item" bindtap="goToMyMatches">
+    <view class="stats-item" bindtap="goToMyMatches" hover-class="stats-item-hover">
       <text class="stats-value">{{myMatchesCount}}</text>
       <text class="stats-label">发布约球</text>
     </view>
-    <view class="stats-item" bindtap="goToMyJoins">
+    <view class="stats-divider"></view>
+    <view class="stats-item" bindtap="goToMyJoins" hover-class="stats-item-hover">
       <text class="stats-value">{{myJoinsCount}}</text>
       <text class="stats-label">参与约球</text>
     </view>
-    <view class="stats-item">
+    <view class="stats-divider"></view>
+    <view class="stats-item" bindtap="goToFavorites" hover-class="stats-item-hover">
       <text class="stats-value">{{collectCount}}</text>
       <text class="stats-label">收藏场馆</text>
     </view>
@@ -40,40 +42,46 @@
   <!-- 功能菜单 -->
   <view class="menu-section">
     <view class="menu-group">
-      <view class="menu-item" bindtap="goToMyMatches">
+      <view class="menu-item" bindtap="goToMyMatches" hover-class="menu-item-hover">
         <text class="menu-icon">📝</text>
-        <text class="menu-text">我的发布</text>
-        <text class="menu-arrow">></text>
+        <text class="menu-title">我的发布</text>
+        <text class="menu-arrow">›</text>
       </view>
-      <view class="menu-item" bindtap="goToMyJoins">
+      <view class="menu-item" bindtap="goToMyJoins" hover-class="menu-item-hover">
         <text class="menu-icon">🎾</text>
-        <text class="menu-text">我参与的</text>
-        <text class="menu-arrow">></text>
+        <text class="menu-title">我参与的</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="goToFavorites" hover-class="menu-item-hover">
+        <text class="menu-icon">❤️</text>
+        <text class="menu-title">收藏场馆</text>
+        <view class="menu-badge" wx:if="{{collectCount > 0}}">{{collectCount}}</view>
+        <text class="menu-arrow">›</text>
       </view>
     </view>
 
     <view class="menu-group">
-      <view class="menu-item" bindtap="goToFeedback">
+      <view class="menu-item" bindtap="goToFeedback" hover-class="menu-item-hover">
         <text class="menu-icon">💬</text>
-        <text class="menu-text">意见反馈</text>
-        <text class="menu-arrow">></text>
+        <text class="menu-title">意见反馈</text>
+        <text class="menu-arrow">›</text>
       </view>
-      <view class="menu-item" bindtap="goToAbout">
+      <view class="menu-item" bindtap="goToAbout" hover-class="menu-item-hover">
         <text class="menu-icon">ℹ️</text>
-        <text class="menu-text">关于我们</text>
-        <text class="menu-arrow">></text>
+        <text class="menu-title">关于我们</text>
+        <text class="menu-arrow">›</text>
       </view>
-      <button class="menu-item contact-btn" open-type="contact">
-        <text class="menu-icon">📞</text>
-        <text class="menu-text">联系客服</text>
-        <text class="menu-arrow">></text>
+      <button class="menu-item contact-btn" open-type="contact" hover-class="menu-item-hover">
+        <text class="menu-icon">🎧</text>
+        <text class="menu-title">联系客服</text>
+        <text class="menu-arrow">›</text>
       </button>
     </view>
   </view>
 
   <!-- 版本信息 -->
   <view class="version-info">
-    <text>TennisFind v1.0.0</text>
+    <text class="version-text">TennisFind v1.0.0</text>
     <text class="powered">Powered by CloudBase</text>
   </view>
 </view>

@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "场馆列表"
+  "navigationBarTitleText": "网球场馆",
+  "enablePullDownRefresh": false
 }

@@ -17,9 +17,16 @@ Page({
   },
 
   onShow: function () {
+    this.loadFavoritesCount();
     if (this.data.openid) {
       this.loadStats();
     }
+  },
+
+  // 加载收藏数量
+  loadFavoritesCount: function () {
+    const favorites = wx.getStorageSync('favorites') || [];
+    this.setData({ collectCount: favorites.length });
   },
 
   // 检查登录状态
@@ -234,7 +241,9 @@ Page({
 
   // 跳转到收藏
   goToFavorites: function () {
-    wx.showToast({ title: '功能开发中', icon: 'none' });
+    wx.navigateTo({
+      url: '/pages/favorites/favorites'
+    });
   },
 
   // 意见反馈

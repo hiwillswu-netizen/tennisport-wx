@@ -1,0 +1,2 @@
+const http=require('http');const tcb=require('@cloudbase/node-sdk');const app=tcb.init({env:tcb.SYMBOL_CURRENT_ENV});const db=app.database();
+const server=http.createServer(async(req,res)=>{res.setHeader('Access-Control-Allow-Origin','*');res.setHeader('Content-Type','application/json');if(req.method==='OPTIONS'){res.end();return}const url=req.url.split('?')[0];

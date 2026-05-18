@@ -81,6 +81,7 @@
     "superjson": "^2.2.6",
     "tailwind-merge": "^3.4.0",
     "vaul": "^1.1.2",
+    "weui-miniprogram": "^1.5.6",
     "wx-server-sdk": "^3.0.4",
     "zod": "^4.3.5"
   },

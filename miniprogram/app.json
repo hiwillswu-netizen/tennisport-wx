@@ -1,12 +1,13 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/venues/venues",
     "pages/venue-detail/venue-detail",
     "pages/matches/matches",
     "pages/match-detail/match-detail",
     "pages/publish-match/publish-match",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/favorites/favorites",
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -18,25 +19,35 @@
     "color": "#999999",
     "selectedColor": "#16a34a",
     "backgroundColor": "#ffffff",
-    "borderStyle": "black",
+    "borderStyle": "white",
     "list": [
       {
-        "pagePath": "pages/index/index",
-        "text": "首页"
-      },
-      {
         "pagePath": "pages/venues/venues",
-        "text": "场馆"
+        "text": "场馆",
+        "iconPath": "images/tab-venue.png",
+        "selectedIconPath": "images/tab-venue-active.png"
       },
       {
         "pagePath": "pages/matches/matches",
-        "text": "约球"
+        "text": "约球",
+        "iconPath": "images/tab-match.png",
+        "selectedIconPath": "images/tab-match-active.png"
       },
       {
         "pagePath": "pages/profile/profile",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
       }
     ]
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置将用于查找附近的网球场馆"
+    }
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2",

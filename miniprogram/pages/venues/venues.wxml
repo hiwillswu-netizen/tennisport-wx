@@ -1,96 +1,242 @@
 <!--pages/venues/venues.wxml-->
 <view class="container">
-  <!-- 筛选栏 -->
-  <view class="filter-bar">
-    <view class="filter-item {{currentFilter === 'all' ? 'active' : ''}}" bindtap="setFilter" data-type="all">
-      全部
+  <!-- 头部标题区域 -->
+  <view class="header">
+    <view class="header-left">
+      <view class="header-title">
+        <text class="location-icon">📍</text>
+        <text class="title-text">杭州网球订场</text>
+      </view>
+      <view class="header-subtitle">共 {{totalCount}} 个场馆 · 覆盖杭州主城区</view>
     </view>
-    <view class="filter-item {{currentFilter === '室内' ? 'active' : ''}}" bindtap="setFilter" data-type="室内">
-      室内
-    </view>
-    <view class="filter-item {{currentFilter === '室外' ? 'active' : ''}}" bindtap="setFilter" data-type="室外">
-      室外
-    </view>
+    <view class="city-tag">杭州</view>
   </view>
 
-  <!-- 区域筛选 -->
+  <!-- 区域快速筛选 -->
   <view class="district-filter">
-    <scroll-view class="district-scroll" scroll-x>
+    <scroll-view class="district-scroll" scroll-x enhanced show-scrollbar="{{false}}">
       <view 
         class="district-item {{currentDistrict === '' ? 'active' : ''}}" 
         bindtap="setDistrict" 
         data-district=""
-      >
-        全部区域
-      </view>
+      >全部</view>
       <view 
         wx:for="{{districts}}" 
         wx:key="*this"
         class="district-item {{currentDistrict === item ? 'active' : ''}}" 
         bindtap="setDistrict" 
         data-district="{{item}}"
-      >
-        {{item}}
-      </view>
+      >{{item}}</view>
     </scroll-view>
   </view>
 
-  <!-- 场馆列表 -->
-  <view wx:if="{{loading}}" class="loading">
+  <!-- 搜索栏和筛选 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper {{searchFocused ? 'focused' : ''}}">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input"
+        placeholder="搜索场馆名称、地址..."
+        placeholder-class="search-placeholder"
+        value="{{searchValue}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearch"
+        bindfocus="onSearchFocus"
+        bindblur="onSearchBlur"
+      />
+      <view wx:if="{{searchValue}}" class="clear-btn" bindtap="onClearSearch">
+        <text class="clear-icon">✕</text>
+      </view>
+    </view>
+    <view class="filter-btn {{hasActiveFilter ? 'active' : ''}}" bindtap="openFilterDrawer">
+      <text class="filter-icon">☰</text>
+      <text class="filter-text">筛选</text>
+    </view>
+  </view>
+
+  <!-- 结果统计 -->
+  <view class="result-info" wx:if="{{!loading && venues.length > 0}}">
+    <text class="result-count">找到 {{venues.length}} 个场馆</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-wrapper">
+    <view class="loading-spinner"></view>
     <text class="loading-text">加载中...</text>
   </view>
 
+  <!-- 空状态 -->
   <view wx:elif="{{venues.length === 0}}" class="empty-state">
-    <text>暂无符合条件的场馆</text>
+    <text class="empty-icon">🎾</text>
+    <text class="empty-text">暂无符合条件的场馆</text>
+    <view class="empty-action" bindtap="resetFilters">重置筛选条件</view>
   </view>
 
+  <!-- 列表视图 -->
   <scroll-view 
-    wx:else 
+    wx:elif="{{viewMode === 'list'}}" 
     class="venue-scroll" 
     scroll-y 
+    enhanced
     bindscrolltolower="loadMore"
     refresher-enabled
     bindrefresherrefresh="onRefresh"
     refresher-triggered="{{refreshing}}"
   >
-    <view 
-      class="venue-card" 
-      wx:for="{{venues}}" 
-      wx:key="_id"
-      bindtap="goToDetail"
-      data-id="{{item._id}}"
-    >
-      <view class="venue-main">
-        <view class="venue-name">{{item.name}}</view>
-        <view class="venue-address">
-          <text class="address-icon">📍</text>
-          {{item.address}}
+    <view class="venue-list">
+      <view 
+        class="venue-card" 
+        wx:for="{{venues}}" 
+        wx:key="_id"
+        bindtap="goToDetail"
+        data-id="{{item._id}}"
+        hover-class="venue-card-hover"
+      >
+        <view class="venue-header">
+          <view class="venue-name">{{item.name}}</view>
+          <view class="venue-type {{item.type === '室内' ? 'type-indoor' : 'type-outdoor'}}">{{item.type}}</view>
         </view>
-        <view class="venue-meta">
-          <view class="venue-tags">
-            <text class="tag {{item.type === '室内' ? 'tag-indoor' : 'tag-outdoor'}}">{{item.type}}</text>
-            <text class="tag tag-default">{{item.courtType}}</text>
-            <text class="tag tag-default">{{item.district}}</text>
+        
+        <view class="venue-address">
+          <text class="icon">📍</text>
+          <text class="address-text">{{item.address}}</text>
+        </view>
+        
+        <view class="venue-info-row">
+          <view class="info-item">
+            <text class="icon">🕐</text>
+            <text class="info-text">{{item.hours || '06:00-22:00'}}</text>
+          </view>
+          <view class="info-item" wx:if="{{item.phone}}">
+            <text class="icon">📞</text>
+            <text class="info-text">{{item.phone}}</text>
           </view>
         </view>
-      </view>
-      <view class="venue-extra">
-        <view class="venue-price" wx:if="{{item.priceWeekday}}">
-          <text class="price-value">{{item.priceWeekday}}</text>
-          <text class="price-label">工作日</text>
+        
+        <view class="venue-footer">
+          <view class="venue-tags">
+            <view class="tag" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" wx:if="{{index < 3}}">{{tag}}</view>
+            <view class="tag" wx:if="{{!item.tags || item.tags.length === 0}}">{{item.courtType || '硬地'}}</view>
+          </view>
+          <view class="venue-price" wx:if="{{item.priceWeekday}}">
+            <text class="price-value">{{item.priceWeekday}}</text>
+          </view>
         </view>
-        <view class="venue-courts" wx:if="{{item.courtsCount}}">
-          <text class="courts-value">{{item.courtsCount}}</text>
-          <text class="courts-label">片场地</text>
+        
+        <view class="venue-booking" wx:if="{{item.bookingMiniProgram}}">
+          <text class="booking-text">可预订: {{item.bookingMiniProgram}}</text>
+          <text class="booking-arrow">→</text>
         </view>
       </view>
     </view>
 
-    <view class="load-more" wx:if="{{hasMore}}">
-      <text class="loading-text">加载更多...</text>
+    <!-- 加载更多 -->
+    <view class="loadmore" wx:if="{{hasMore}}">
+      <view class="loadmore-spinner"></view>
+      <text class="loadmore-text">加载更多...</text>
     </view>
-    <view class="no-more" wx:if="{{!hasMore && venues.length > 0}}">
-      <text>— 已经到底了 —</text>
+    <view class="loadmore-end" wx:if="{{!hasMore && venues.length > 0}}">
+      <text class="loadmore-end-text">已经到底了</text>
     </view>
   </scroll-view>
+
+  <!-- 地图视图 -->
+  <view wx:elif="{{viewMode === 'map'}}" class="map-container">
+    <map 
+      id="venueMap"
+      class="venue-map"
+      longitude="{{mapCenter.longitude}}"
+      latitude="{{mapCenter.latitude}}"
+      scale="{{mapScale}}"
+      markers="{{markers}}"
+      show-location
+      enable-scroll
+      enable-zoom
+      bindmarkertap="onMarkerTap"
+      bindcallouttap="onCalloutTap"
+    />
+  </view>
+
+  <!-- 视图切换按钮 -->
+  <view class="view-switcher">
+    <view 
+      class="switch-btn {{viewMode === 'list' ? 'active' : ''}}" 
+      bindtap="switchViewMode"
+      data-mode="list"
+    >
+      <text class="switch-icon">☰</text>
+      <text class="switch-text">列表</text>
+    </view>
+    <view 
+      class="switch-btn {{viewMode === 'map' ? 'active' : ''}}" 
+      bindtap="switchViewMode"
+      data-mode="map"
+    >
+      <text class="switch-icon">🗺</text>
+      <text class="switch-text">地图</text>
+    </view>
+  </view>
+
+  <!-- 筛选抽屉 -->
+  <view class="filter-drawer {{filterDrawerOpen ? 'open' : ''}}" catchtouchmove="{{filterDrawerOpen ? 'preventTouchMove' : ''}}">
+    <view class="filter-mask" bindtap="closeFilterDrawer"></view>
+    <view class="filter-content">
+      <view class="filter-header">
+        <text class="filter-title">筛选条件</text>
+        <view class="filter-close" bindtap="closeFilterDrawer">✕</view>
+      </view>
+      
+      <view class="filter-section">
+        <view class="filter-section-title">场地类型</view>
+        <view class="filter-options">
+          <view 
+            class="filter-option {{tempFilter === 'all' ? 'active' : ''}}"
+            bindtap="setFilter"
+            data-type="all"
+          >全部</view>
+          <view 
+            class="filter-option {{tempFilter === '室内' ? 'active' : ''}}"
+            bindtap="setFilter"
+            data-type="室内"
+          >室内</view>
+          <view 
+            class="filter-option {{tempFilter === '室外' ? 'active' : ''}}"
+            bindtap="setFilter"
+            data-type="室外"
+          >室外</view>
+        </view>
+      </view>
+
+      <view class="filter-section">
+        <view class="filter-section-title">价格区间</view>
+        <view class="filter-options">
+          <view 
+            class="filter-option {{tempPriceRange === 'all' ? 'active' : ''}}"
+            bindtap="setPriceRange"
+            data-range="all"
+          >不限</view>
+          <view 
+            class="filter-option {{tempPriceRange === 'low' ? 'active' : ''}}"
+            bindtap="setPriceRange"
+            data-range="low"
+          >50元以下</view>
+          <view 
+            class="filter-option {{tempPriceRange === 'mid' ? 'active' : ''}}"
+            bindtap="setPriceRange"
+            data-range="mid"
+          >50-100元</view>
+          <view 
+            class="filter-option {{tempPriceRange === 'high' ? 'active' : ''}}"
+            bindtap="setPriceRange"
+            data-range="high"
+          >100元以上</view>
+        </view>
+      </view>
+
+      <view class="filter-actions">
+        <view class="filter-reset" bindtap="resetFilters">重置</view>
+        <view class="filter-confirm" bindtap="applyFilters">确定</view>
+      </view>
+    </view>
+  </view>
 </view>
