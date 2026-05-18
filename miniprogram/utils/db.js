@@ -92,15 +92,69 @@ const venueApi = {
    */
   async getNearbyVenues(longitude, latitude, maxDistance = 5000) {
     try {
-      const { data } = await db.collection('venues')
-        .where({
-          location: _.geoNear({
-            geometry: db.Geo.Point(longitude, latitude),
-            maxDistance
-          })
+      // 小程序端单次最多返回20条，需要分批获取
+      const MAX_LIMIT = 20;
+      const countResult = await db.collection('venues').count();
+      const total = countResult.total;
+      
+      // 分批获取所有数据
+      const batchTimes = Math.ceil(total / MAX_LIMIT);
+      const tasks = [];
+      for (let i = 0; i < batchTimes; i++) {
+        const promise = db.collection('venues')
+          .skip(i * MAX_LIMIT)
+          .limit(MAX_LIMIT)
+          .get();
+        tasks.push(promise);
+      }
+      const results = await Promise.all(tasks);
+      let allVenues = results.reduce((acc, cur) => acc.concat(cur.data), []);
+      
+      // 过滤有坐标的场馆并计算距离
+      allVenues = allVenues
+        .filter(v => {
+          if (v.location && v.location.coordinates) return true;
+          if (v.location && typeof v.location.longitude === 'number') return true;
+          if (typeof v.lat === 'number' && typeof v.lng === 'number') return true;
+          if (typeof v.latitude === 'number' && typeof v.longitude === 'number') return true;
+          return true; // 保留没有坐标的场馆
         })
-        .get();
-      return data;
+        .map(v => {
+          // 计算距离
+          let vLat, vLng;
+          if (v.location && v.location.coordinates) {
+            [vLng, vLat] = v.location.coordinates;
+          } else if (v.location && typeof v.location.longitude === 'number') {
+            vLng = v.location.longitude;
+            vLat = v.location.latitude;
+          } else if (typeof v.lat === 'number') {
+            vLat = v.lat;
+            vLng = v.lng;
+          } else if (typeof v.latitude === 'number') {
+            vLat = v.latitude;
+            vLng = v.longitude;
+          }
+          
+          if (vLat && vLng) {
+            // 简单距离计算（单位：米）
+            const radLat1 = latitude * Math.PI / 180;
+            const radLat2 = vLat * Math.PI / 180;
+            const a = radLat1 - radLat2;
+            const b = (longitude - vLng) * Math.PI / 180;
+            const s = 2 * Math.asin(Math.sqrt(
+              Math.pow(Math.sin(a / 2), 2) +
+              Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
+            ));
+            v._distance = Math.round(s * 6378137); // 地球半径
+          } else {
+            v._distance = 999999; // 无坐标的放最后
+          }
+          return v;
+        })
+        .filter(v => v._distance <= maxDistance || v._distance === 999999)
+        .sort((a, b) => a._distance - b._distance);
+      
+      return allVenues;
     } catch (err) {
       console.error('获取附近场馆失败', err);
       // 降级返回所有场馆
@@ -109,12 +163,26 @@ const venueApi = {
   },
 
   /**
-   * 获取所有场馆
+   * 获取所有场馆（解决20条限制）
    * @returns {Promise<Array>}
    */
   async getAllVenues() {
-    const { data } = await db.collection('venues').get();
-    return data;
+    const MAX_LIMIT = 20;
+    const countResult = await db.collection('venues').count();
+    const total = countResult.total;
+    
+    // 分批获取所有数据
+    const batchTimes = Math.ceil(total / MAX_LIMIT);
+    const tasks = [];
+    for (let i = 0; i < batchTimes; i++) {
+      const promise = db.collection('venues')
+        .skip(i * MAX_LIMIT)
+        .limit(MAX_LIMIT)
+        .get();
+      tasks.push(promise);
+    }
+    const results = await Promise.all(tasks);
+    return results.reduce((acc, cur) => acc.concat(cur.data), []);
   },
 
   /**

@@ -18,7 +18,7 @@
       <view class="info-icon">📅</view>
       <view class="info-content">
         <text class="info-label">活动时间</text>
-        <text class="info-value">{{match.matchDate}} {{match.matchTime}}</text>
+        <text class="info-value">{{match.date}} {{match.startTime}}-{{match.endTime}}</text>
       </view>
     </view>
 
@@ -34,7 +34,7 @@
       <view class="info-icon">👥</view>
       <view class="info-content">
         <text class="info-label">人数</text>
-        <text class="info-value">{{match.currentPeople || 1}} / {{match.needPeople || 4}} 人</text>
+        <text class="info-value">{{match.currentPlayers || 1}} / {{match.maxPlayers || 4}} 人</text>
       </view>
     </view>
 

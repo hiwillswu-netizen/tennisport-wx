@@ -55,35 +55,43 @@ Page({
     }
   },
 
-  // 获取用户信息（微信授权）
+  // 获取用户信息（点击登录）
   getUserProfile: async function () {
     try {
-      const { userInfo: wxUserInfo } = await wx.getUserProfile({
-        desc: '用于完善用户资料'
-      });
+      // 先确保有 openid
+      if (!this.data.openid) {
+        const { result } = await wx.cloud.callFunction({
+          name: 'getOpenId'
+        });
+        this.setData({ openid: result.openid });
+      }
 
       this.setData({ loading: true });
 
-      // 保存到数据库
-      await userApi.updateUser({
-        nickName: wxUserInfo.nickName,
-        avatarUrl: wxUserInfo.avatarUrl,
-        gender: wxUserInfo.gender
-      });
+      // 创建或获取用户记录（使用默认信息）
+      let userInfo = await userApi.getCurrentUser();
+      
+      if (!userInfo) {
+        // 创建新用户，使用默认昵称
+        await userApi.updateUser({
+          nickName: '网球爱好者',
+          avatarUrl: '',
+          gender: 0
+        });
+        userInfo = await userApi.getCurrentUser();
+      }
 
-      // 重新加载用户信息
-      const userInfo = await userApi.getCurrentUser();
       this.setData({
-        userInfo: { ...userInfo, avatarTempUrl: wxUserInfo.avatarUrl },
+        userInfo: userInfo,
         loading: false
       });
 
       wx.showToast({ title: '登录成功', icon: 'success' });
+      this.loadStats();
     } catch (err) {
+      console.error('登录失败:', err);
       this.setData({ loading: false });
-      if (err.errMsg && err.errMsg.indexOf('cancel') === -1) {
-        wx.showToast({ title: '授权失败', icon: 'none' });
-      }
+      wx.showToast({ title: '登录失败', icon: 'none' });
     }
   },
 

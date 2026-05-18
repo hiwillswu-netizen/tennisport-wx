@@ -74,7 +74,6 @@
       <button class="menu-item contact-btn" open-type="contact" hover-class="menu-item-hover">
         <text class="menu-icon">🎧</text>
         <text class="menu-title">联系客服</text>
-        <text class="menu-arrow">›</text>
       </button>
     </view>
   </view>

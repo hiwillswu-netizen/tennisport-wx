@@ -31,8 +31,9 @@ Page({
     
     // 地图相关数据
     mapCenter: HANGZHOU_CENTER,
-    mapScale: 11,
+    mapScale: 12,
     markers: [],
+    selectedVenue: null, // 当前选中的场馆
     
     // 筛选抽屉
     filterDrawerOpen: false,
@@ -99,18 +100,17 @@ Page({
 
     try {
       let venues;
-      const { userLocation, page, pageSize } = this.data;
+      const { userLocation } = this.data;
 
-      // 如果有用户位置，优先获取附近场馆
-      if (userLocation && reset) {
+      // 获取所有场馆（已解决20条限制）
+      if (userLocation) {
         venues = await venueApi.getNearbyVenues(
           userLocation.longitude,
           userLocation.latitude,
-          50000 // 50km范围
+          100000 // 100km范围，基本覆盖杭州全市
         );
       } else {
-        // 分页加载所有场馆
-        venues = await venueApi.getVenuesByPage(page, pageSize);
+        venues = await venueApi.getAllVenues();
       }
 
       // 获取场馆图片的临时URL
@@ -131,15 +131,12 @@ Page({
           : '/images/venue-default.png'
       }));
 
-      const allVenues = reset ? venuesWithImages : [...this.data.allVenues, ...venuesWithImages];
-
       this.setData({
-        allVenues,
+        allVenues: venuesWithImages,
         loading: false,
         refreshing: false,
-        hasMore: venues.length === pageSize,
-        page: page + 1,
-        totalCount: allVenues.length
+        hasMore: false, // 一次性加载完成
+        totalCount: venuesWithImages.length
       });
 
       // 更新区域列表
@@ -206,20 +203,40 @@ Page({
   updateMapMarkers: function () {
     const markers = this.data.venues
       .filter(v => {
-        // 支持两种格式: location.coordinates 或 lat/lng
-        if (v.location && v.location.coordinates) return true;
-        if (v.lat && v.lng) return true;
+        // 支持多种格式: location.coordinates / location.longitude,latitude / lat,lng
+        if (v.location && v.location.coordinates && Array.isArray(v.location.coordinates)) return true;
+        if (v.location && typeof v.location.longitude === 'number' && typeof v.location.latitude === 'number') return true;
+        if (typeof v.lat === 'number' && typeof v.lng === 'number') return true;
+        if (typeof v.latitude === 'number' && typeof v.longitude === 'number') return true;
         return false;
       })
       .map((venue, index) => {
-        // 兼容两种数据格式
+        // 兼容多种数据格式
         let lat, lng;
-        if (venue.location && venue.location.coordinates) {
+        
+        if (venue.location && venue.location.coordinates && Array.isArray(venue.location.coordinates)) {
+          // GeoJSON 格式: [longitude, latitude]
           [lng, lat] = venue.location.coordinates;
-        } else {
+        } else if (venue.location && typeof venue.location.longitude === 'number') {
+          // 对象格式: { longitude, latitude }
+          lng = venue.location.longitude;
+          lat = venue.location.latitude;
+        } else if (typeof venue.lat === 'number' && typeof venue.lng === 'number') {
+          // 扁平格式: lat, lng
           lat = venue.lat;
           lng = venue.lng;
+        } else if (typeof venue.latitude === 'number' && typeof venue.longitude === 'number') {
+          // 扁平格式: latitude, longitude
+          lat = venue.latitude;
+          lng = venue.longitude;
         }
+        
+        // 验证坐标是否在合理范围内（中国区域）
+        if (!lat || !lng || lat < 3 || lat > 54 || lng < 73 || lng > 136) {
+          console.warn(`场馆 ${venue.name} 坐标无效:`, { lat, lng, location: venue.location });
+          return null;
+        }
+        
         const isIndoor = venue.type === '室内';
         
         return {
@@ -228,26 +245,9 @@ Page({
           latitude: lat,
           longitude: lng,
           title: venue.name,
-          width: 28,
-          height: 36,
-          // 使用自定义标记样式
-          customCallout: {
-            display: 'BYCLICK',
-            anchorX: 0,
-            anchorY: 0
-          },
-          label: {
-            content: '🎾',
-            color: isIndoor ? '#2563eb' : '#16a34a',
-            fontSize: 16,
-            anchorX: -8,
-            anchorY: -20,
-            bgColor: '#ffffff',
-            borderRadius: 16,
-            borderWidth: 2,
-            borderColor: isIndoor ? '#2563eb' : '#16a34a',
-            padding: 4
-          },
+          width: 32,
+          height: 32,
+          iconPath: isIndoor ? '/images/marker-indoor.png' : '/images/marker-outdoor.png',
           callout: {
             content: `${venue.name}\n${venue.priceWeekday || '价格待定'}`,
             color: '#333333',
@@ -259,8 +259,10 @@ Page({
             textAlign: 'center'
           }
         };
-      });
+      })
+      .filter(m => m !== null); // 过滤无效标记
 
+    console.log('地图标记数据:', markers.slice(0, 3)); // 调试：输出前3个标记
     this.setData({ markers });
   },
 
@@ -319,7 +321,11 @@ Page({
     const markerId = e.markerId;
     const marker = this.data.markers[markerId];
     if (marker && marker.venueId) {
-      // 不跳转，只显示callout
+      // 找到对应的场馆
+      const venue = this.data.venues.find(v => v._id === marker.venueId);
+      if (venue) {
+        this.setData({ selectedVenue: venue });
+      }
     }
   },
 
@@ -330,6 +336,62 @@ Page({
     if (marker && marker.venueId) {
       wx.navigateTo({
         url: `/pages/venue-detail/venue-detail?id=${marker.venueId}`
+      });
+    }
+  },
+
+  // 关闭球馆弹窗
+  closeVenuePopup: function () {
+    this.setData({ selectedVenue: null });
+  },
+
+  // 从弹窗跳转详情
+  goToDetailFromPopup: function () {
+    const venue = this.data.selectedVenue;
+    if (venue) {
+      wx.navigateTo({
+        url: `/pages/venue-detail/venue-detail?id=${venue._id}`
+      });
+    }
+  },
+
+  // 移动到我的位置
+  moveToMyLocation: function () {
+    const { userLocation } = this.data;
+    
+    if (userLocation) {
+      // 已有位置，直接移动
+      this.setData({
+        mapCenter: userLocation,
+        mapScale: 14
+      });
+    } else {
+      // 重新获取位置
+      wx.showLoading({ title: '定位中...' });
+      wx.getLocation({
+        type: 'gcj02',
+        success: (res) => {
+          this.setData({
+            userLocation: {
+              longitude: res.longitude,
+              latitude: res.latitude
+            },
+            mapCenter: {
+              longitude: res.longitude,
+              latitude: res.latitude
+            },
+            mapScale: 14
+          });
+          wx.hideLoading();
+        },
+        fail: () => {
+          wx.hideLoading();
+          wx.showModal({
+            title: '定位失败',
+            content: '请在系统设置中开启位置权限',
+            showCancel: false
+          });
+        }
       });
     }
   },

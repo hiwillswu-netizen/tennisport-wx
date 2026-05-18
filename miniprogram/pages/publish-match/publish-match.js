@@ -11,17 +11,12 @@ Page({
     venueId: '',
     venueName: '',
     venueList: [],
-    maxPlayers: 4,
+    needPeople: 4,
     peopleOptions: [2, 3, 4, 5, 6, 7, 8],
     level: '',
-    levelOptions: [
-      { value: '', label: '不限' },
-      { value: 'beginner', label: '初学者 (1.0-2.0)' },
-      { value: 'intermediate', label: '中级 (2.5-3.5)' },
-      { value: 'advanced', label: '高级 (4.0-4.5)' },
-      { value: 'pro', label: '专业 (5.0+)' }
-    ],
-    description: '',
+    levelOptions: ['不限', '初学者 (1.0-2.0)', '中级 (2.5-3.5)', '高级 (4.0-4.5)', '专业 (5.0+)'],
+    fee: '',
+    remark: '',
     submitting: false
   },
 
@@ -91,19 +86,23 @@ Page({
   // 选择人数
   onPeopleChange: function (e) {
     const index = e.detail.value;
-    this.setData({ maxPlayers: this.data.peopleOptions[index] });
+    this.setData({ needPeople: this.data.peopleOptions[index] });
   },
 
   // 选择水平
   onLevelChange: function (e) {
     const index = e.detail.value;
-    const level = this.data.levelOptions[index].value;
-    this.setData({ level });
+    this.setData({ level: this.data.levelOptions[index] });
   },
 
-  // 输入描述
-  onDescriptionInput: function (e) {
-    this.setData({ description: e.detail.value });
+  // 输入费用
+  onFeeInput: function (e) {
+    this.setData({ fee: e.detail.value });
+  },
+
+  // 输入备注
+  onRemarkInput: function (e) {
+    this.setData({ remark: e.detail.value });
   },
 
   // 表单验证
@@ -145,9 +144,10 @@ Page({
         date: this.data.matchDate,
         startTime: this.data.startTime,
         endTime: this.data.endTime,
-        maxPlayers: this.data.maxPlayers,
+        maxPlayers: this.data.needPeople,
         level: this.data.level,
-        description: this.data.description
+        fee: this.data.fee,
+        remark: this.data.remark
       };
 
       await matchApi.createMatch(matchInfo);

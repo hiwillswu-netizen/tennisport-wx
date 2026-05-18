@@ -164,11 +164,19 @@
 .action-btn {
   flex: 1;
   height: 88rpx;
-  line-height: 88rpx;
   border-radius: 12rpx;
   font-size: 30rpx;
   font-weight: 500;
   margin: 0 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.action-btn::after {
+  border: none;
 }
 
 .share-btn {
@@ -180,16 +188,19 @@
 .join-btn {
   background-color: #16a34a;
   color: #fff;
+  border: none;
 }
 
 .joined-btn {
   background-color: #e5e7eb;
   color: #9ca3af;
+  border: none;
 }
 
 .manage-btn {
   background-color: #3b82f6;
   color: #fff;
+  border: none;
 }
 
 .loading-container {
