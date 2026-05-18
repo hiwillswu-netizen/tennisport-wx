@@ -1,10 +1,31 @@
 /* pages/venues/venues.wxss */
+page {
+  overflow-x: hidden;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-color: #f5f5f5;
   position: relative;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* 固定顶部区域 */
+.fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: #fff;
+}
+
+/* 顶部占位，防止内容被固定栏遮挡 */
+.fixed-top-placeholder {
+  height: 260rpx;
 }
 
 /* 头部区域 */
@@ -51,42 +72,42 @@
   font-weight: 500;
 }
 
-/* 区域筛选 */
-.district-filter {
-  background-color: #fff;
-  padding: 16rpx 0;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.district-scroll {
-  white-space: nowrap;
-  padding: 0 32rpx;
-}
-
-.district-item {
-  display: inline-block;
-  padding: 14rpx 28rpx;
-  margin-right: 16rpx;
-  border-radius: 32rpx;
-  font-size: 26rpx;
-  color: #666;
-  background-color: #f5f5f5;
-  transition: all 0.2s;
-}
-
-.district-item.active {
-  background-color: #16a34a;
-  color: #fff;
-  font-weight: 500;
-}
-
-/* 搜索栏 */
+/* 搜索栏和筛选下拉 */
 .search-bar {
   display: flex;
   align-items: center;
-  padding: 20rpx 32rpx;
+  padding: 16rpx 24rpx;
   background-color: #fff;
   border-bottom: 1rpx solid #f0f0f0;
+  gap: 12rpx;
+}
+
+/* 筛选下拉选择器 */
+.filter-picker {
+  flex-shrink: 0;
+}
+
+.filter-dropdown {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 16rpx;
+  background-color: #f5f5f5;
+  border-radius: 8rpx;
+}
+
+.filter-label {
+  font-size: 24rpx;
+  color: #333;
+  max-width: 80rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-arrow {
+  font-size: 16rpx;
+  color: #999;
+  margin-left: 4rpx;
 }
 
 .search-input-wrapper {
@@ -94,9 +115,9 @@
   display: flex;
   align-items: center;
   background-color: #f5f5f5;
-  border-radius: 40rpx;
-  padding: 16rpx 24rpx;
-  margin-right: 20rpx;
+  border-radius: 8rpx;
+  padding: 14rpx 16rpx;
+  min-width: 0;
   transition: all 0.2s;
 }
 
@@ -106,15 +127,16 @@
 }
 
 .search-icon {
-  font-size: 28rpx;
-  margin-right: 12rpx;
+  font-size: 26rpx;
+  margin-right: 8rpx;
   opacity: 0.5;
 }
 
 .search-input {
   flex: 1;
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #333;
+  min-width: 0;
 }
 
 .search-placeholder {
@@ -122,51 +144,20 @@
 }
 
 .clear-btn {
-  width: 36rpx;
-  height: 36rpx;
+  width: 32rpx;
+  height: 32rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #ccc;
   border-radius: 50%;
-  margin-left: 12rpx;
+  margin-left: 8rpx;
+  flex-shrink: 0;
 }
 
 .clear-icon {
-  font-size: 20rpx;
+  font-size: 18rpx;
   color: #fff;
-}
-
-.filter-btn {
-  display: flex;
-  align-items: center;
-  padding: 16rpx 24rpx;
-  background-color: #f5f5f5;
-  border-radius: 40rpx;
-  border: 1rpx solid #e5e5e5;
-  transition: all 0.2s;
-}
-
-.filter-btn.active {
-  background-color: #16a34a;
-  border-color: #16a34a;
-}
-
-.filter-btn.active .filter-icon,
-.filter-btn.active .filter-text {
-  color: #fff;
-}
-
-.filter-icon {
-  font-size: 28rpx;
-  margin-right: 8rpx;
-  color: #666;
-}
-
-.filter-text {
-  font-size: 26rpx;
-  font-weight: 500;
-  color: #666;
 }
 
 /* 结果统计 */

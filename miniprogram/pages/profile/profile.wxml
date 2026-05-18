@@ -2,12 +2,19 @@
 <view class="container">
   <!-- 用户信息区 -->
   <view class="user-section">
-    <view class="user-card" wx:if="{{userInfo}}">
-      <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+    <view class="user-card login-card" wx:if="{{userInfo}}">
+      <!-- 使用 button 获取头像 -->
+      <button class="avatar-wrapper" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image class="logged-avatar" src="{{userInfo.avatarTempUrl || userInfo.avatarUrl}}" mode="aspectFill" wx:if="{{userInfo.avatarTempUrl || userInfo.avatarUrl}}"></image>
+        <view class="login-avatar" wx:else>
+          <text class="login-icon">👤</text>
+        </view>
+      </button>
       <view class="user-info">
-        <text class="user-nickname">{{userInfo.nickName}}</text>
-        <text class="user-id" wx:if="{{openid}}">ID: {{openid.slice(-8)}}</text>
+        <input type="nickname" class="nickname-input" placeholder="点击设置昵称" value="{{userInfo.nickName}}" bindblur="onNicknameBlur" bindinput="onNicknameInput" />
+        <text class="login-tip">ID: {{openidShort}}</text>
       </view>
+      <text class="login-arrow">›</text>
     </view>
     <view class="user-card login-card" wx:else bindtap="getUserProfile" hover-class="user-card-hover">
       <view class="login-avatar">

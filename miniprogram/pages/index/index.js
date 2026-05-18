@@ -65,7 +65,14 @@ Page({
       .then(res => {
         const matches = res.data.map(item => ({
           ...item,
-          createTimeStr: this.formatTime(item.createTime)
+          createTimeStr: this.formatTime(item.createTime),
+          // 映射字段：数据库存的是 date/startTime/endTime，显示用 matchDate/matchTime
+          matchDate: item.date || item.matchDate || '',
+          matchTime: item.startTime ? `${item.startTime}-${item.endTime || ''}` : (item.matchTime || ''),
+          userNickname: item.creatorInfo?.nickName || item.userNickname || '网球爱好者',
+          userAvatar: item.creatorInfo?.avatarUrl || '/images/avatar-default.png',
+          currentPeople: (item.players?.length || 0) + 1,
+          needPeople: item.maxPlayers || item.needPeople || 4
         }));
         this.setData({
           matches: matches,

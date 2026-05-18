@@ -1,63 +1,63 @@
 <!--pages/venues/venues.wxml-->
 <view class="container">
-  <!-- 头部标题区域 -->
-  <view class="header">
-    <view class="header-left">
-      <view class="header-title">
-        <text class="location-icon">📍</text>
-        <text class="title-text">杭州网球订场</text>
+  <!-- 固定顶部区域 -->
+  <view class="fixed-top">
+    <!-- 头部标题区域 -->
+    <view class="header">
+      <view class="header-left">
+        <view class="header-title">
+          <text class="location-icon">📍</text>
+          <text class="title-text">Find杭州网球</text>
+        </view>
+        <view class="header-subtitle">共 {{totalCount}} 个场馆 · 覆盖杭州主城区</view>
       </view>
-      <view class="header-subtitle">共 {{totalCount}} 个场馆 · 覆盖杭州主城区</view>
+      <view class="city-tag">杭州</view>
     </view>
-    <view class="city-tag">杭州</view>
-  </view>
 
-  <!-- 区域快速筛选 -->
-  <view class="district-filter">
-    <scroll-view class="district-scroll" scroll-x enhanced show-scrollbar="{{false}}">
-      <view 
-        class="district-item {{currentDistrict === '' ? 'active' : ''}}" 
-        bindtap="setDistrict" 
-        data-district=""
-      >全部</view>
-      <view 
-        wx:for="{{districts}}" 
-        wx:key="*this"
-        class="district-item {{currentDistrict === item ? 'active' : ''}}" 
-        bindtap="setDistrict" 
-        data-district="{{item}}"
-      >{{item}}</view>
-    </scroll-view>
-  </view>
-
-  <!-- 搜索栏和筛选 -->
-  <view class="search-bar">
-    <view class="search-input-wrapper {{searchFocused ? 'focused' : ''}}">
-      <text class="search-icon">🔍</text>
-      <input 
-        class="search-input"
-        placeholder="搜索场馆名称、地址..."
-        placeholder-class="search-placeholder"
-        value="{{searchValue}}"
-        bindinput="onSearchInput"
-        bindconfirm="onSearch"
-        bindfocus="onSearchFocus"
-        bindblur="onSearchBlur"
-      />
-      <view wx:if="{{searchValue}}" class="clear-btn" bindtap="onClearSearch">
-        <text class="clear-icon">✕</text>
+    <!-- 搜索栏和筛选下拉 -->
+    <view class="search-bar">
+      <!-- 区域下拉 -->
+      <picker class="filter-picker" mode="selector" range="{{districtOptions}}" value="{{districtIndex}}" bindchange="onDistrictChange">
+        <view class="filter-dropdown">
+          <text class="filter-label">{{currentDistrict || '杭州'}}</text>
+          <text class="dropdown-arrow">▼</text>
+        </view>
+      </picker>
+      <!-- 场地类型下拉 -->
+      <picker class="filter-picker" mode="selector" range="{{typeOptions}}" value="{{typeIndex}}" bindchange="onTypeChange">
+        <view class="filter-dropdown">
+          <text class="filter-label">{{currentType || '场地'}}</text>
+          <text class="dropdown-arrow">▼</text>
+        </view>
+      </picker>
+      <!-- 是否可预定下拉 -->
+      <picker class="filter-picker" mode="selector" range="{{bookableOptions}}" value="{{bookableIndex}}" bindchange="onBookableChange">
+        <view class="filter-dropdown">
+          <text class="filter-label">{{currentBookable || '预定'}}</text>
+          <text class="dropdown-arrow">▼</text>
+        </view>
+      </picker>
+      <!-- 搜索框 -->
+      <view class="search-input-wrapper {{searchFocused ? 'focused' : ''}}">
+        <text class="search-icon">🔍</text>
+        <input 
+          class="search-input"
+          placeholder="搜索场馆..."
+          placeholder-class="search-placeholder"
+          value="{{searchValue}}"
+          bindinput="onSearchInput"
+          bindconfirm="onSearch"
+          bindfocus="onSearchFocus"
+          bindblur="onSearchBlur"
+        />
+        <view wx:if="{{searchValue}}" class="clear-btn" bindtap="onClearSearch">
+          <text class="clear-icon">✕</text>
+        </view>
       </view>
     </view>
-    <view class="filter-btn {{hasActiveFilter ? 'active' : ''}}" bindtap="openFilterDrawer">
-      <text class="filter-icon">☰</text>
-      <text class="filter-text">筛选</text>
-    </view>
   </view>
-
-  <!-- 结果统计 -->
-  <view class="result-info" wx:if="{{!loading && venues.length > 0}}">
-    <text class="result-count">找到 {{venues.length}} 个场馆</text>
-  </view>
+  <!-- 顶部占位 -->
+  <view class="fixed-top-placeholder"></view>
 
   <!-- 加载状态 -->
   <view wx:if="{{loading}}" class="loading-wrapper">
@@ -207,69 +207,6 @@
     >
       <text class="switch-icon">🗺</text>
       <text class="switch-text">地图</text>
-    </view>
-  </view>
-
-  <!-- 筛选抽屉 -->
-  <view class="filter-drawer {{filterDrawerOpen ? 'open' : ''}}" catchtouchmove="{{filterDrawerOpen ? 'preventTouchMove' : ''}}">
-    <view class="filter-mask" bindtap="closeFilterDrawer"></view>
-    <view class="filter-content">
-      <view class="filter-header">
-        <text class="filter-title">筛选条件</text>
-        <view class="filter-close" bindtap="closeFilterDrawer">✕</view>
-      </view>
-      
-      <view class="filter-section">
-        <view class="filter-section-title">场地类型</view>
-        <view class="filter-options">
-          <view 
-            class="filter-option {{tempFilter === 'all' ? 'active' : ''}}"
-            bindtap="setFilter"
-            data-type="all"
-          >全部</view>
-          <view 
-            class="filter-option {{tempFilter === '室内' ? 'active' : ''}}"
-            bindtap="setFilter"
-            data-type="室内"
-          >室内</view>
-          <view 
-            class="filter-option {{tempFilter === '室外' ? 'active' : ''}}"
-            bindtap="setFilter"
-            data-type="室外"
-          >室外</view>
-        </view>
-      </view>
-
-      <view class="filter-section">
-        <view class="filter-section-title">价格区间</view>
-        <view class="filter-options">
-          <view 
-            class="filter-option {{tempPriceRange === 'all' ? 'active' : ''}}"
-            bindtap="setPriceRange"
-            data-range="all"
-          >不限</view>
-          <view 
-            class="filter-option {{tempPriceRange === 'low' ? 'active' : ''}}"
-            bindtap="setPriceRange"
-            data-range="low"
-          >50元以下</view>
-          <view 
-            class="filter-option {{tempPriceRange === 'mid' ? 'active' : ''}}"
-            bindtap="setPriceRange"
-            data-range="mid"
-          >50-100元</view>
-          <view 
-            class="filter-option {{tempPriceRange === 'high' ? 'active' : ''}}"
-            bindtap="setPriceRange"
-            data-range="high"
-          >100元以上</view>
-        </view>
-      </view>
-
-      <view class="filter-actions">
-        <view class="filter-reset" bindtap="resetFilters">重置</view>
-        <view class="filter-confirm" bindtap="applyFilters">确定</view>
-      </view>
     </view>
   </view>
 </view>

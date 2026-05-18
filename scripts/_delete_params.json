@@ -1,0 +1,6 @@
+{
+  "action": "delete",
+  "collectionName": "venues",
+  "query": {},
+  "isMulti": true
+}

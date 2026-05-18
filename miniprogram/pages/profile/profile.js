@@ -6,6 +6,7 @@ Page({
   data: {
     userInfo: null,
     openid: '',
+    openidShort: '',
     myMatchesCount: 0,
     myJoinsCount: 0,
     collectCount: 0,
@@ -36,7 +37,10 @@ Page({
         name: 'getOpenId'
       });
       const openid = result.openid;
-      this.setData({ openid: openid });
+      this.setData({ 
+        openid: openid,
+        openidShort: openid ? openid.slice(-8) : ''
+      });
 
       // 从数据库获取用户信息
       const userInfo = await userApi.getCurrentUser();
@@ -63,7 +67,10 @@ Page({
         const { result } = await wx.cloud.callFunction({
           name: 'getOpenId'
         });
-        this.setData({ openid: result.openid });
+        this.setData({ 
+          openid: result.openid,
+          openidShort: result.openid ? result.openid.slice(-8) : ''
+        });
       }
 
       this.setData({ loading: true });
@@ -95,7 +102,60 @@ Page({
     }
   },
 
-  // 选择并上传头像
+  // 选择头像（使用微信头像选择能力）
+  onChooseAvatar: async function (e) {
+    const { avatarUrl } = e.detail;
+    if (!avatarUrl) return;
+
+    try {
+      this.setData({ loading: true });
+      wx.showLoading({ title: '上传中...' });
+
+      // 上传头像到云存储
+      const fileID = await uploadAvatar(avatarUrl);
+
+      // 更新用户资料
+      await userApi.updateUser({ avatarUrl: fileID });
+
+      // 获取临时URL显示
+      const tempUrl = await getTempUrl(fileID);
+
+      this.setData({
+        'userInfo.avatarUrl': fileID,
+        'userInfo.avatarTempUrl': tempUrl.tempFileURL,
+        loading: false
+      });
+
+      wx.hideLoading();
+      wx.showToast({ title: '头像更新成功', icon: 'success' });
+    } catch (err) {
+      wx.hideLoading();
+      this.setData({ loading: false });
+      console.error('上传头像失败:', err);
+      wx.showToast({ title: '上传失败', icon: 'error' });
+    }
+  },
+
+  // 昵称输入
+  onNicknameInput: function (e) {
+    this.setData({ 'userInfo.nickName': e.detail.value });
+  },
+
+  // 昵称输入完成（失去焦点时保存）
+  onNicknameBlur: async function (e) {
+    const nickName = e.detail.value.trim();
+    if (!nickName || nickName === this.data.userInfo?.nickName) return;
+
+    try {
+      await userApi.updateUser({ nickName });
+      wx.showToast({ title: '昵称已保存', icon: 'success' });
+    } catch (err) {
+      console.error('保存昵称失败:', err);
+      wx.showToast({ title: '保存失败', icon: 'none' });
+    }
+  },
+
+  // 选择并上传头像（保留原方法作为备用）
   chooseAvatar: async function () {
     if (!this.data.userInfo) {
       wx.showToast({ title: '请先登录', icon: 'none' });

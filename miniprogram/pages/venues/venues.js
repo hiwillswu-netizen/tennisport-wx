@@ -13,9 +13,21 @@ Page({
     venues: [],
     allVenues: [], // 用于筛选
     districts: [],
-    currentFilter: 'all',
+    // 区域下拉
+    districtOptions: ['杭州', '滨江区', '萧山区', '上城区', '西湖区', '拱墅区', '余杭区', '临平区', '钱塘区'],
+    districtIndex: 0,
     currentDistrict: '',
-    priceRange: 'all',
+    // 场地类型下拉
+    typeOptions: ['场地', '室内', '室外'],
+    typeIndex: 0,
+    currentType: '',
+    // 是否可预定下拉
+    bookableOptions: ['预定', '可预定', '不可预定'],
+    bookableIndex: 0,
+    currentBookable: '',
+    bookableFilter: 'all', // 'all', 'yes', 'no'
+    
+    currentFilter: 'all',
     loading: true,
     refreshing: false,
     hasMore: true,
@@ -35,11 +47,9 @@ Page({
     markers: [],
     selectedVenue: null, // 当前选中的场馆
     
-    // 筛选抽屉
+    // 筛选抽屉（保留兼容）
     filterDrawerOpen: false,
     hasActiveFilter: false,
-    
-    // 临时筛选值
     tempFilter: 'all',
     tempPriceRange: 'all'
   },
@@ -85,7 +95,8 @@ Page({
   // 加载区域列表
   loadDistricts: function () {
     const districts = [...new Set(this.data.allVenues.map(v => v.district).filter(Boolean))];
-    this.setData({ districts });
+    const districtOptions = ['区域', ...districts];
+    this.setData({ districts, districtOptions });
   },
 
   // 加载场馆列表
@@ -157,7 +168,7 @@ Page({
   // 应用筛选到列表
   applyFiltersToList: function () {
     let filtered = [...this.data.allVenues];
-    const { currentFilter, currentDistrict, priceRange, searchValue } = this.data;
+    const { currentFilter, currentDistrict, bookableFilter, searchValue } = this.data;
 
     // 类型筛选
     if (currentFilter !== 'all') {
@@ -169,21 +180,11 @@ Page({
       filtered = filtered.filter(v => v.district === currentDistrict);
     }
 
-    // 价格筛选
-    if (priceRange !== 'all') {
+    // 是否可预定筛选
+    if (bookableFilter !== 'all') {
       filtered = filtered.filter(v => {
-        if (!v.priceWeekday) return false;
-        // 提取价格数字
-        const match = v.priceWeekday.match(/\d+/);
-        if (!match) return false;
-        const price = parseInt(match[0]);
-        
-        switch (priceRange) {
-          case 'low': return price < 50;
-          case 'mid': return price >= 50 && price <= 100;
-          case 'high': return price > 100;
-          default: return true;
-        }
+        const hasBooking = !!(v.bookingMiniProgram || v.bookingUrl || v.bookingPhone);
+        return bookableFilter === 'yes' ? hasBooking : !hasBooking;
       });
     }
 
@@ -245,9 +246,9 @@ Page({
           latitude: lat,
           longitude: lng,
           title: venue.name,
-          width: 32,
-          height: 32,
-          iconPath: isIndoor ? '/images/marker-indoor.png' : '/images/marker-outdoor.png',
+          width: 36,
+          height: 36,
+          iconPath: isIndoor ? '/images/marker-tennis-indoor.png' : '/images/marker-tennis-outdoor.png',
           callout: {
             content: `${venue.name}\n${venue.priceWeekday || '价格待定'}`,
             color: '#333333',
@@ -294,7 +295,51 @@ Page({
     this.updateMapMarkers();
   },
 
-  // 设置区域筛选
+  // 设置区域筛选（picker 下拉选择）
+  onDistrictChange: function (e) {
+    const index = parseInt(e.detail.value);
+    const districtOptions = this.data.districtOptions;
+    const district = index === 0 ? '' : districtOptions[index];
+    
+    this.setData({
+      districtIndex: index,
+      currentDistrict: district
+    });
+    this.applyFiltersToList();
+    this.updateMapMarkers();
+  },
+
+  // 设置场地类型（picker 下拉选择）
+  onTypeChange: function (e) {
+    const index = parseInt(e.detail.value);
+    const typeOptions = this.data.typeOptions;
+    const type = index === 0 ? '' : typeOptions[index];
+    
+    this.setData({
+      typeIndex: index,
+      currentType: type,
+      currentFilter: index === 0 ? 'all' : type
+    });
+    this.applyFiltersToList();
+    this.updateMapMarkers();
+  },
+
+  // 设置是否可预定（picker 下拉选择）
+  onBookableChange: function (e) {
+    const index = parseInt(e.detail.value);
+    const bookableMap = ['all', 'yes', 'no'];
+    const bookableLabels = ['', '可预定', '不可预定'];
+    
+    this.setData({
+      bookableIndex: index,
+      currentBookable: bookableLabels[index],
+      bookableFilter: bookableMap[index]
+    });
+    this.applyFiltersToList();
+    this.updateMapMarkers();
+  },
+
+  // 设置区域筛选（旧方法保留兼容）
   setDistrict: function (e) {
     const district = e.currentTarget.dataset.district;
     if (district !== this.data.currentDistrict) {

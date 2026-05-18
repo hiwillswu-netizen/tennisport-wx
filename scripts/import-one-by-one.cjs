@@ -1,64 +1,51 @@
 /**
- * 使用 mcporter 逐条插入球馆数据
- * 运行: node scripts/import-one-by-one.cjs
+ * 批量导入场馆数据 - 使用 mcporter
+ * 逐条导入以确保稳定性
  */
 
-const { execSync, spawnSync } = require('child_process');
+const { execSync } = require('child_process');
 const fs = require('fs');
+const path = require('path');
 
-// 读取生成的 JSON 数据
-const venues = JSON.parse(fs.readFileSync('scripts/venues-to-import.json', 'utf8'));
+// 读取数据
+const jsonPath = path.join(__dirname, 'venues-to-import.json');
+const venues = JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
 
-console.log(`开始导入 ${venues.length} 条球馆数据...\n`);
+// 跳过第一条（已经导入）
+const toImport = venues.slice(1);
+
+console.log(`准备导入 ${toImport.length} 条场馆数据...\n`);
 
 let successCount = 0;
 let failCount = 0;
 
-for (let i = 0; i < venues.length; i++) {
-  const venue = venues[i];
+for (let i = 0; i < toImport.length; i++) {
+  const venue = toImport[i];
+  const docJson = JSON.stringify([venue]);
   
-  // 将单个文档写入临时文件
-  const tempFile = 'scripts/_temp_venue.json';
-  fs.writeFileSync(tempFile, JSON.stringify([venue]));
+  // 转义双引号
+  const escaped = docJson.replace(/"/g, '\\"');
+  
+  console.log(`[${i + 1}/${toImport.length}] ${venue.name}`);
   
   try {
-    // 读取文件内容作为 documents 参数
-    const docsContent = fs.readFileSync(tempFile, 'utf8');
+    const cmd = `npx mcporter call cloudbase writeNoSqlDatabaseContent --action "insert" --collectionName "venues" --documents "${escaped}"`;
     
-    // 使用 spawnSync 避免命令行转义问题
-    const result = spawnSync('npx', [
-      'mcporter', 'call', 'cloudbase', 'writeNoSqlDatabaseContent',
-      '--action', 'insert',
-      '--collectionName', 'venues',
-      '--documents', docsContent
-    ], {
+    execSync(cmd, {
       encoding: 'utf-8',
-      timeout: 60000,
-      shell: true,
-      cwd: process.cwd()
+      timeout: 30000,
+      cwd: path.join(__dirname, '..'),
+      stdio: ['pipe', 'pipe', 'pipe']
     });
     
-    const output = result.stdout + result.stderr;
+    console.log(`  ✓ 成功`);
+    successCount++;
     
-    if (output.includes('"success": true') || output.includes('"success":true')) {
-      console.log(`[${i + 1}/${venues.length}] 成功: ${venue.name}`);
-      successCount++;
-    } else {
-      console.log(`[${i + 1}/${venues.length}] 失败: ${venue.name}`);
-      // console.log('输出:', output.substring(0, 500));
-      failCount++;
-    }
   } catch (error) {
-    console.log(`[${i + 1}/${venues.length}] 错误: ${venue.name} - ${error.message}`);
+    console.log(`  ✗ 失败`);
     failCount++;
   }
 }
 
-// 清理临时文件
-try { fs.unlinkSync('scripts/_temp_venue.json'); } catch(e) {}
-
-console.log('\n=============================');
-console.log('导入完成!');
-console.log(`成功: ${successCount} 条`);
-console.log(`失败: ${failCount} 条`);
-console.log('=============================');
+console.log(`\n导入完成！成功: ${successCount}, 失败: ${failCount}`);
+console.log(`总计: ${successCount + 1} 条（含之前已导入的 1 条）`);

@@ -91,12 +91,15 @@ Page({
       const formattedMatches = matches.map(item => ({
         ...item,
         createTimeStr: this.formatTime(item.createTime),
-        creatorAvatar: item.creatorInfo?.avatarUrl
+        // 映射字段：数据库存的是 date/startTime/endTime，显示用 matchDate/matchTime
+        matchDate: item.date || item.matchDate || '',
+        matchTime: item.startTime ? `${item.startTime}-${item.endTime || ''}` : (item.matchTime || ''),
+        userNickname: item.creatorInfo?.nickName || item.userNickname || '网球爱好者',
+        userAvatar: item.creatorInfo?.avatarUrl
           ? imageUrlMap[item.creatorInfo.avatarUrl] || '/images/avatar-default.png'
           : '/images/avatar-default.png',
-        playerAvatars: (item.players || [])
-          .slice(0, 3)
-          .map(p => imageUrlMap[p.avatarUrl] || '/images/avatar-default.png')
+        currentPeople: (item.players?.length || 0) + 1,
+        needPeople: item.maxPlayers || item.needPeople || 4
       }));
 
       const newMatches = reset ? formattedMatches : [...this.data.matches, ...formattedMatches];
@@ -134,7 +137,14 @@ Page({
 
       const formattedMatches = matches.map(item => ({
         ...item,
-        createTimeStr: this.formatTime(item.createTime)
+        createTimeStr: this.formatTime(item.createTime),
+        // 映射字段：数据库存的是 date/startTime/endTime，显示用 matchDate/matchTime
+        matchDate: item.date || item.matchDate || '',
+        matchTime: item.startTime ? `${item.startTime}-${item.endTime || ''}` : (item.matchTime || ''),
+        userNickname: item.creatorInfo?.nickName || item.userNickname || '网球爱好者',
+        userAvatar: item.creatorInfo?.avatarUrl || '/images/avatar-default.png',
+        currentPeople: (item.players?.length || 0) + 1,
+        needPeople: item.maxPlayers || item.needPeople || 4
       }));
 
       this.setData({

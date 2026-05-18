@@ -19,18 +19,78 @@
 }
 
 .user-avatar {
-  width: 120rpx;
-  height: 120rpx;
+  width: 100rpx;
+  height: 100rpx;
   border-radius: 50%;
   border: 4rpx solid rgba(255, 255, 255, 0.3);
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+/* 头像选择按钮 - 清除所有 button 默认样式 */
+.avatar-wrapper {
+  width: 100rpx !important;
+  height: 100rpx !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 50% !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+}
+
+.avatar-wrapper::after {
+  display: none !important;
+  border: none !important;
+}
+
+/* 登录后的头像图片 */
+.logged-avatar {
+  width: 100rpx !important;
+  height: 100rpx !important;
+  border-radius: 50% !important;
+  display: block !important;
+}
+
+/* 按钮内的默认头像样式 */
+.avatar-wrapper .login-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 昵称输入框 */
+.nickname-input {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4rpx;
+  padding: 0;
+  height: 44rpx;
+  line-height: 44rpx;
+  background: transparent;
+}
+
+.nickname-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .user-info {
   flex: 1;
-  padding-left: 24rpx;
+  margin-left: 24rpx;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .user-nickname {
