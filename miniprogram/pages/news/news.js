@@ -205,9 +205,14 @@ Page({
 
   // 过滤并更新列表
   filterNews: function (category) {
-    const filtered = category === 'all'
+    const filtered = (category === 'all'
       ? NEWS_DATA
-      : NEWS_DATA.filter(item => item.category === category);
+      : NEWS_DATA.filter(item => item.category === category)
+    ).map(item => ({
+      ...item,
+      categoryClass: { '赛事': 'match', '本地': 'local', '教学': 'learn' }[item.category] || 'match',
+      categoryLabel: item.category
+    }));
     this.setData({ newsList: filtered });
   },
 

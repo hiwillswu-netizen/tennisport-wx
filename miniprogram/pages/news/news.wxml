@@ -73,8 +73,8 @@
         <view class="card-body">
           <!-- 分类标签 + 来源 -->
           <view class="card-meta">
-            <view class="category-tag cat-{{item.category}}">
-              <text class="category-tag-text">{{item.category}}</text>
+            <view class="category-tag cat-{{item.categoryClass}}">
+              <text class="category-tag-text">{{item.categoryLabel}}</text>
             </view>
             <text class="card-source">{{item.source}}</text>
           </view>
@@ -125,8 +125,8 @@
       <scroll-view class="modal-body" scroll-y>
         <!-- 标签与来源 -->
         <view class="modal-meta">
-          <view class="category-tag cat-{{modalNews.category}}">
-            <text class="category-tag-text">{{modalNews.category}}</text>
+          <view class="category-tag cat-{{modalNews.categoryClass}}">
+            <text class="category-tag-text">{{modalNews.categoryLabel}}</text>
           </view>
           <text class="modal-source">{{modalNews.source}} · {{modalNews.date}}</text>
         </view>
