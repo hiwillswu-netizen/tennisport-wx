@@ -1,14 +1,14 @@
 {
   "pages": [
     "pages/venues/venues",
-    "pages/venue-detail/venue-detail",
     "pages/matches/matches",
+    "pages/news/news",
+    "pages/profile/profile",
+    "pages/venue-detail/venue-detail",
     "pages/match-detail/match-detail",
     "pages/publish-match/publish-match",
-    "pages/profile/profile",
     "pages/favorites/favorites",
-    "pages/index/index",
-    "pages/news/news"
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
