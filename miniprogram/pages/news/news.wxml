@@ -72,7 +72,9 @@
               </view>
               <text class="card-source">{{item.source}}</text>
             </view>
-            <text class="card-cover-emoji">{{item.emoji}}</text>
+            <view class="card-icon-wrap cat-bg-{{item.categoryClass}}">
+              <image class="card-icon-img" src="{{item.iconPath}}" mode="aspectFit"/>
+            </view>
           </view>
 
           <!-- 标题 -->

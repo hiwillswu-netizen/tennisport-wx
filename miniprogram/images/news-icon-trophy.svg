@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+  <!-- 奖杯主体 -->
+  <path d="M14 6h12v10c0 5.523-2.686 9-6 9s-6-3.477-6-9V6z"
+        stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 奖杯左耳 -->
+  <path d="M14 9H10a3 3 0 0 0 0 6h4"
+        stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 奖杯右耳 -->
+  <path d="M26 9h4a3 3 0 0 1 0 6h-4"
+        stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 颈部 -->
+  <path d="M20 25v5"
+        stroke="#1a56db" stroke-width="2" stroke-linecap="round"/>
+  <!-- 底座连接 -->
+  <path d="M16 30h8"
+        stroke="#1a56db" stroke-width="2" stroke-linecap="round"/>
+  <!-- 底座 -->
+  <path d="M13 33h14"
+        stroke="#1a56db" stroke-width="2" stroke-linecap="round"/>
+</svg>

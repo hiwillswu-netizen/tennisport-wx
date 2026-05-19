@@ -194,9 +194,22 @@
   gap: 12rpx;
 }
 
-.card-cover-emoji {
-  font-size: 48rpx;
-  line-height: 1;
+.card-icon-wrap {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cat-bg-match { background-color: #e8f0fe; }
+.cat-bg-local { background-color: #dcfce7; }
+.cat-bg-learn { background-color: #fff7e6; }
+
+.card-icon-img {
+  width: 40rpx;
+  height: 40rpx;
 }
 
 /* 分类标签 */

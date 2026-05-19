@@ -11,7 +11,8 @@ const NEWS_DATA = [
     source: 'ATP官网',
     date: '2025-06-18',
     emoji: '🏆',
-    color: '#166534'
+    color: '#166534',
+    iconPath: '/images/news-icon-trophy.svg'
   },
   {
     id: 2,
@@ -22,7 +23,8 @@ const NEWS_DATA = [
     source: 'WTA官网',
     date: '2025-06-05',
     emoji: '🎾',
-    color: '#b45309'
+    color: '#b45309',
+    iconPath: '/images/news-icon-trophy.svg'
   },
   {
     id: 3,
@@ -33,7 +35,8 @@ const NEWS_DATA = [
     source: '网球世界',
     date: '2025-01-28',
     emoji: '🏅',
-    color: '#0369a1'
+    color: '#0369a1',
+    iconPath: '/images/news-icon-trophy.svg'
   },
   {
     id: 4,
@@ -44,7 +47,8 @@ const NEWS_DATA = [
     source: 'Tennis.com',
     date: '2024-09-10',
     emoji: '🗽',
-    color: '#1d4ed8'
+    color: '#1d4ed8',
+    iconPath: '/images/news-icon-trophy.svg'
   },
   {
     id: 5,
@@ -55,7 +59,8 @@ const NEWS_DATA = [
     source: 'ATP官网',
     date: '2024-11-18',
     emoji: '👑',
-    color: '#7c3aed'
+    color: '#7c3aed',
+    iconPath: '/images/news-icon-trophy.svg'
   },
   {
     id: 6,
@@ -66,7 +71,8 @@ const NEWS_DATA = [
     source: 'WTA官网',
     date: '2025-05-20',
     emoji: '🌟',
-    color: '#dc2626'
+    color: '#dc2626',
+    iconPath: '/images/news-icon-trophy.svg'
   },
   {
     id: 7,
@@ -77,7 +83,8 @@ const NEWS_DATA = [
     source: '上海劳力士大师赛',
     date: '2024-10-14',
     emoji: '🏙️',
-    color: '#0f766e'
+    color: '#0f766e',
+    iconPath: '/images/news-icon-location.svg'
   },
   {
     id: 8,
@@ -88,7 +95,8 @@ const NEWS_DATA = [
     source: '杭州体育',
     date: '2025-06-02',
     emoji: '🏡',
-    color: '#16a34a'
+    color: '#16a34a',
+    iconPath: '/images/news-icon-location.svg'
   },
   {
     id: 9,
@@ -99,7 +107,8 @@ const NEWS_DATA = [
     source: '钱江晚报',
     date: '2025-04-15',
     emoji: '🏟️',
-    color: '#ea580c'
+    color: '#ea580c',
+    iconPath: '/images/news-icon-location.svg'
   },
   {
     id: 10,
@@ -110,7 +119,8 @@ const NEWS_DATA = [
     source: '澎湃新闻',
     date: '2025-06-10',
     emoji: '🌆',
-    color: '#0369a1'
+    color: '#0369a1',
+    iconPath: '/images/news-icon-location.svg'
   },
   {
     id: 11,
@@ -121,7 +131,8 @@ const NEWS_DATA = [
     source: 'TennisFind教学',
     date: '2025-06-12',
     emoji: '💪',
-    color: '#7c3aed'
+    color: '#7c3aed',
+    iconPath: '/images/news-icon-book.svg'
   },
   {
     id: 12,
@@ -132,7 +143,8 @@ const NEWS_DATA = [
     source: '网球技术周刊',
     date: '2025-05-28',
     emoji: '🎯',
-    color: '#0f766e'
+    color: '#0f766e',
+    iconPath: '/images/news-icon-book.svg'
   },
   {
     id: 13,
@@ -143,7 +155,8 @@ const NEWS_DATA = [
     source: 'TennisFind教学',
     date: '2025-06-08',
     emoji: '🥅',
-    color: '#b45309'
+    color: '#b45309',
+    iconPath: '/images/news-icon-book.svg'
   },
   {
     id: 14,
@@ -154,7 +167,8 @@ const NEWS_DATA = [
     source: '新华社',
     date: '2025-01-10',
     emoji: '🇨🇳',
-    color: '#dc2626'
+    color: '#dc2626',
+    iconPath: '/images/news-icon-trophy.svg'
   },
   {
     id: 15,
@@ -165,7 +179,8 @@ const NEWS_DATA = [
     source: 'TennisFind教学',
     date: '2025-06-15',
     emoji: '📖',
-    color: '#16a34a'
+    color: '#16a34a',
+    iconPath: '/images/news-icon-book.svg'
   }
 ];
 
@@ -205,13 +220,20 @@ Page({
 
   // 过滤并更新列表
   filterNews: function (category) {
+    const categoryClassMap = { '赛事': 'match', '本地': 'local', '教学': 'learn' };
+    const iconPathMap = {
+      '赛事': '/images/news-icon-trophy.svg',
+      '本地': '/images/news-icon-location.svg',
+      '教学': '/images/news-icon-book.svg'
+    };
     const filtered = (category === 'all'
       ? NEWS_DATA
       : NEWS_DATA.filter(item => item.category === category)
     ).map(item => ({
       ...item,
-      categoryClass: { '赛事': 'match', '本地': 'local', '教学': 'learn' }[item.category] || 'match',
-      categoryLabel: item.category
+      categoryClass: categoryClassMap[item.category] || 'match',
+      categoryLabel: item.category,
+      iconPath: item.iconPath || iconPathMap[item.category] || '/images/news-icon-tennis.svg'
     }));
     this.setData({ newsList: filtered });
   },
