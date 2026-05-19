@@ -59,8 +59,10 @@ page {
 }
 
 .location-icon {
-  font-size: 36rpx;
+  width: 44rpx;
+  height: 44rpx;
   margin-right: 8rpx;
+  flex-shrink: 0;
 }
 
 .title-text {

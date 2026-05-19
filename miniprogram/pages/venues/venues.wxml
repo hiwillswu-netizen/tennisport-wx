@@ -6,7 +6,7 @@
     <view class="header">
       <view class="header-left">
         <view class="header-title">
-          <text class="location-icon">📍</text>
+          <image class="location-icon" src="/images/tennis-ball.svg" mode="aspectFit"/>
           <text class="title-text">Find杭州网球</text>
         </view>
         <view class="header-subtitle">共 {{totalCount}} 个场馆 · 覆盖杭州主城区</view>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <radialGradient id="ballGrad" cx="38%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#d4f56a"/>
+      <stop offset="60%" stop-color="#b5e020"/>
+      <stop offset="100%" stop-color="#8ab800"/>
+    </radialGradient>
+    <radialGradient id="shadowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="70%" stop-color="transparent"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.15)"/>
+    </radialGradient>
+    <clipPath id="circle">
+      <circle cx="50" cy="50" r="46"/>
+    </clipPath>
+  </defs>
+  <!-- 主球体 -->
+  <circle cx="50" cy="50" r="46" fill="url(#ballGrad)"/>
+  <!-- 边缘阴影 -->
+  <circle cx="50" cy="50" r="46" fill="url(#shadowGrad)"/>
+  <!-- 高光 -->
+  <ellipse cx="36" cy="32" rx="10" ry="7" fill="rgba(255,255,255,0.25)" transform="rotate(-30 36 32)"/>
+  <!-- 缝合线（白色弧线） -->
+  <g clip-path="url(#circle)" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round">
+    <!-- 左弧线 -->
+    <path d="M 24 20 Q 8 50 24 80"/>
+    <!-- 右弧线 -->
+    <path d="M 76 20 Q 92 50 76 80"/>
+  </g>
+  <!-- 描边 -->
+  <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+</svg>
