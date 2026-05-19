@@ -55,28 +55,24 @@
     refresher-enabled
     refresher-triggered="{{false}}"
   >
-    <view class="news-list">
-      <view
-        wx:for="{{newsList}}"
-        wx:key="id"
-        class="news-card"
-        bindtap="openNewsDetail"
-        data-id="{{item.id}}"
-        hover-class="news-card-hover"
-      >
-        <!-- 左侧色块封面 -->
-        <view class="card-cover" style="background-color: {{item.color}};">
-          <text class="card-emoji">{{item.emoji}}</text>
-        </view>
-
-        <!-- 右侧文字区域 -->
-        <view class="card-body">
-          <!-- 分类标签 + 来源 -->
-          <view class="card-meta">
-            <view class="category-tag cat-{{item.categoryClass}}">
-              <text class="category-tag-text">{{item.categoryLabel}}</text>
+      <view class="news-list">
+        <view
+          wx:for="{{newsList}}"
+          wx:key="id"
+          class="news-card"
+          bindtap="openNewsDetail"
+          data-id="{{item.id}}"
+          hover-class="news-card-hover"
+        >
+          <!-- 顶部：分类标签 + 来源 + emoji -->
+          <view class="card-top">
+            <view class="card-top-left">
+              <view class="category-tag cat-{{item.categoryClass}}">
+                <text class="category-tag-text">{{item.categoryLabel}}</text>
+              </view>
+              <text class="card-source">{{item.source}}</text>
             </view>
-            <text class="card-source">{{item.source}}</text>
+            <text class="card-cover-emoji">{{item.emoji}}</text>
           </view>
 
           <!-- 标题 -->
@@ -85,14 +81,13 @@
           <!-- 摘要 -->
           <text class="card-summary">{{item.summary}}</text>
 
-          <!-- 日期 + 箭头 -->
+          <!-- 底部：日期 -->
           <view class="card-footer">
-            <text class="card-date">📅 {{item.date}}</text>
-            <text class="card-arrow">›</text>
+            <text class="card-date">{{item.date}}</text>
+            <text class="card-read-more">阅读全文 ›</text>
           </view>
         </view>
       </view>
-    </view>
 
     <!-- 列表底部 -->
     <view class="list-end">
