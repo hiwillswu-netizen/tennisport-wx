@@ -1,0 +1,154 @@
+<!--pages/news/news.wxml-->
+<view class="container">
+
+  <!-- ═══════════════════════════════════════════════
+       顶部 Banner
+  ════════════════════════════════════════════════ -->
+  <view class="banner">
+    <!-- 装饰性网球纹理圆圈 -->
+    <view class="banner-deco deco-1"></view>
+    <view class="banner-deco deco-2"></view>
+    <view class="banner-deco deco-3"></view>
+    <!-- Banner 内容 -->
+    <view class="banner-content">
+      <view class="banner-icon-row">
+        <text class="banner-emoji">🎾</text>
+        <text class="banner-badge">TENNIS NEWS</text>
+      </view>
+      <text class="banner-title">网球资讯</text>
+      <text class="banner-subtitle">赛事动态 · 本地活动 · 技巧教学</text>
+    </view>
+    <!-- 右侧装饰数字 -->
+    <view class="banner-stat">
+      <text class="banner-stat-num">{{newsList.length}}</text>
+      <text class="banner-stat-label">篇内容</text>
+    </view>
+  </view>
+
+  <!-- ═══════════════════════════════════════════════
+       分类 Tab 横向滚动
+  ════════════════════════════════════════════════ -->
+  <view class="category-bar-wrap">
+    <scroll-view class="category-bar" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="category-list">
+        <view
+          wx:for="{{categories}}"
+          wx:key="key"
+          class="category-item {{currentCategory === item.key ? 'active' : ''}}"
+          bindtap="switchCategory"
+          data-key="{{item.key}}"
+        >
+          <text class="category-text">{{item.label}}</text>
+          <view wx:if="{{currentCategory === item.key}}" class="category-underline"></view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- ═══════════════════════════════════════════════
+       资讯卡片列表
+  ════════════════════════════════════════════════ -->
+  <scroll-view
+    class="news-scroll"
+    scroll-y
+    enhanced
+    refresher-enabled
+    refresher-triggered="{{false}}"
+  >
+    <view class="news-list">
+      <view
+        wx:for="{{newsList}}"
+        wx:key="id"
+        class="news-card"
+        bindtap="openNewsDetail"
+        data-id="{{item.id}}"
+        hover-class="news-card-hover"
+      >
+        <!-- 左侧色块封面 -->
+        <view class="card-cover" style="background-color: {{item.color}};">
+          <text class="card-emoji">{{item.emoji}}</text>
+        </view>
+
+        <!-- 右侧文字区域 -->
+        <view class="card-body">
+          <!-- 分类标签 + 来源 -->
+          <view class="card-meta">
+            <view class="category-tag cat-{{item.category}}">
+              <text class="category-tag-text">{{item.category}}</text>
+            </view>
+            <text class="card-source">{{item.source}}</text>
+          </view>
+
+          <!-- 标题 -->
+          <text class="card-title">{{item.title}}</text>
+
+          <!-- 摘要 -->
+          <text class="card-summary">{{item.summary}}</text>
+
+          <!-- 日期 + 箭头 -->
+          <view class="card-footer">
+            <text class="card-date">📅 {{item.date}}</text>
+            <text class="card-arrow">›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 列表底部 -->
+    <view class="list-end">
+      <text class="list-end-text">— 已显示全部 {{newsList.length}} 条资讯 —</text>
+    </view>
+
+    <!-- 底部安全区域 -->
+    <view class="safe-area-bottom"></view>
+  </scroll-view>
+
+  <!-- ═══════════════════════════════════════════════
+       详情弹窗 Modal
+  ════════════════════════════════════════════════ -->
+  <view wx:if="{{showModal}}" class="modal-mask" bindtap="closeModal">
+    <view class="modal-container" catchtap="stopPropagation">
+
+      <!-- 弹窗顶部色条 -->
+      <view class="modal-header" style="background-color: {{modalNews.color}};">
+        <view class="modal-header-deco deco-a"></view>
+        <view class="modal-header-deco deco-b"></view>
+        <view class="modal-emoji-wrap">
+          <text class="modal-emoji">{{modalNews.emoji}}</text>
+        </view>
+        <view class="modal-close-btn" bindtap="closeModal">
+          <text class="modal-close-icon">✕</text>
+        </view>
+      </view>
+
+      <!-- 弹窗内容区（可滚动） -->
+      <scroll-view class="modal-body" scroll-y>
+        <!-- 标签与来源 -->
+        <view class="modal-meta">
+          <view class="category-tag cat-{{modalNews.category}}">
+            <text class="category-tag-text">{{modalNews.category}}</text>
+          </view>
+          <text class="modal-source">{{modalNews.source}} · {{modalNews.date}}</text>
+        </view>
+
+        <!-- 标题 -->
+        <text class="modal-title">{{modalNews.title}}</text>
+
+        <!-- 正文 -->
+        <text class="modal-content">{{modalNews.content}}</text>
+      </scroll-view>
+
+      <!-- 底部按钮 -->
+      <view class="modal-actions">
+        <view class="modal-close-action" bindtap="closeModal">
+          <text class="modal-close-action-text">关闭</text>
+        </view>
+        <button class="modal-share-btn" open-type="share">
+          <text class="modal-share-text">分享</text>
+        </button>
+      </view>
+
+    </view>
+  </view>
+
+</view>

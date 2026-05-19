@@ -7,7 +7,8 @@
     "pages/publish-match/publish-match",
     "pages/profile/profile",
     "pages/favorites/favorites",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/news/news"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -33,6 +34,12 @@
         "text": "约球",
         "iconPath": "images/tab-match.png",
         "selectedIconPath": "images/tab-match-active.png"
+      },
+      {
+        "pagePath": "pages/news/news",
+        "text": "资讯",
+        "iconPath": "images/tab-news.png",
+        "selectedIconPath": "images/tab-news-active.png"
       },
       {
         "pagePath": "pages/profile/profile",
