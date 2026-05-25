@@ -8,7 +8,7 @@
 
   <!-- 空状态 -->
   <view class="empty-state" wx:elif="{{!loading && venues.length === 0}}">
-    <text class="empty-icon">💔</text>
+    <image class="empty-icon-img" src="/images/lucide/heart.svg" mode="aspectFit"/>
     <text class="empty-text">暂无收藏场馆</text>
     <view class="empty-action" bindtap="goToVenues">去逛逛</view>
   </view>
@@ -26,16 +26,16 @@
         <view class="venue-type {{item.type === '室内' ? 'type-indoor' : 'type-outdoor'}}">{{item.type}}</view>
       </view>
       <view class="venue-address">
-        <text class="icon">📍</text>
+        <image class="icon icon-img" src="/images/lucide/map-pin.svg" mode="aspectFit"/>
         <text class="address-text">{{item.address}}</text>
       </view>
       <view class="venue-info-row">
         <view class="info-item" wx:if="{{item.hours}}">
-          <text class="icon">🕐</text>
+          <image class="icon icon-img" src="/images/lucide/clock.svg" mode="aspectFit"/>
           <text class="info-text">{{item.hours}}</text>
         </view>
         <view class="info-item" wx:if="{{item.phone}}">
-          <text class="icon">📞</text>
+          <image class="icon icon-img" src="/images/lucide/phone.svg" mode="aspectFit"/>
           <text class="info-text">{{item.phone}}</text>
         </view>
       </view>
@@ -44,7 +44,7 @@
           <view class="tag" wx:for="{{item.tagsArray}}" wx:for-item="tag" wx:key="*this">{{tag}}</view>
         </view>
         <view class="remove-btn" catchtap="removeFavorite" data-id="{{item._id}}">
-          <text class="remove-icon">🗑️</text>
+          <image class="remove-icon" src="/images/lucide/trash-2.svg" mode="aspectFit"/>
         </view>
       </view>
     </view>

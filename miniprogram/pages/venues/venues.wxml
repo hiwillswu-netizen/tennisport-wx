@@ -39,7 +39,7 @@
       </picker>
       <!-- 搜索框 -->
       <view class="search-input-wrapper {{searchFocused ? 'focused' : ''}}">
-        <text class="search-icon">🔍</text>
+        <image class="search-icon icon-img" src="/images/lucide/search.svg" mode="aspectFit"/>
         <input 
           class="search-input"
           placeholder="搜索场馆..."
@@ -51,7 +51,7 @@
           bindblur="onSearchBlur"
         />
         <view wx:if="{{searchValue}}" class="clear-btn" bindtap="onClearSearch">
-          <text class="clear-icon">✕</text>
+          <image class="clear-icon icon-img" src="/images/lucide/x.svg" mode="aspectFit"/>
         </view>
       </view>
     </view>
@@ -67,7 +67,7 @@
 
   <!-- 空状态 -->
   <view wx:elif="{{venues.length === 0}}" class="empty-state">
-    <text class="empty-icon">🎾</text>
+    <image class="empty-icon-img" src="/images/lucide/circle-dot.svg" mode="aspectFit"/>
     <text class="empty-text">暂无符合条件的场馆</text>
     <view class="empty-action" bindtap="resetFilters">重置筛选条件</view>
   </view>
@@ -98,17 +98,17 @@
         </view>
         
         <view class="venue-address">
-          <text class="icon">📍</text>
+          <image class="icon icon-img" src="/images/lucide/map-pin.svg" mode="aspectFit"/>
           <text class="address-text">{{item.address}}</text>
         </view>
         
         <view class="venue-info-row">
           <view class="info-item">
-            <text class="icon">🕐</text>
+            <image class="icon icon-img" src="/images/lucide/clock.svg" mode="aspectFit"/>
             <text class="info-text">{{item.hours || '06:00-22:00'}}</text>
           </view>
           <view class="info-item" wx:if="{{item.phone}}">
-            <text class="icon">📞</text>
+            <image class="icon icon-img" src="/images/lucide/phone.svg" mode="aspectFit"/>
             <text class="info-text">{{item.phone}}</text>
           </view>
         </view>
@@ -157,28 +157,30 @@
     />
     <!-- 我的位置按钮 -->
     <view class="my-location-btn" bindtap="moveToMyLocation">
-      <text class="location-btn-icon">📍</text>
+      <image class="location-btn-icon" src="/images/lucide/locate-fixed.svg" mode="aspectFit"/>
     </view>
     
     <!-- 球馆信息弹窗 -->
     <view class="venue-popup {{selectedVenue ? 'show' : ''}}" wx:if="{{selectedVenue}}">
-      <view class="popup-close" bindtap="closeVenuePopup">✕</view>
+      <view class="popup-close" bindtap="closeVenuePopup">
+        <image class="popup-close-icon" src="/images/lucide/x.svg" mode="aspectFit"/>
+      </view>
       <view class="popup-content" bindtap="goToDetailFromPopup">
         <view class="popup-header">
           <view class="popup-name">{{selectedVenue.name}}</view>
           <view class="popup-type {{selectedVenue.type === '室内' ? 'type-indoor' : 'type-outdoor'}}">{{selectedVenue.type}}</view>
         </view>
         <view class="popup-address">
-          <text class="popup-icon">📍</text>
+          <image class="popup-icon icon-img" src="/images/lucide/map-pin.svg" mode="aspectFit"/>
           <text>{{selectedVenue.address}}</text>
         </view>
         <view class="popup-info">
           <view class="popup-price" wx:if="{{selectedVenue.priceWeekday}}">
-            <text class="popup-icon">💰</text>
+            <image class="popup-icon icon-img" src="/images/lucide/dollar-sign.svg" mode="aspectFit"/>
             <text>{{selectedVenue.priceWeekday}}</text>
           </view>
           <view class="popup-hours" wx:if="{{selectedVenue.hours}}">
-            <text class="popup-icon">🕐</text>
+            <image class="popup-icon icon-img" src="/images/lucide/clock.svg" mode="aspectFit"/>
             <text>{{selectedVenue.hours}}</text>
           </view>
         </view>
@@ -197,16 +199,18 @@
       bindtap="switchViewMode"
       data-mode="list"
     >
-      <text class="switch-icon">☰</text>
-      <text class="switch-text">列表</text>
+      <image wx:if="{{viewMode === 'list'}}" class="switch-icon" src="/images/lucide/list-white.svg" mode="aspectFit"/>
+      <image wx:else class="switch-icon" src="/images/lucide/list.svg" mode="aspectFit"/>
+      <text class="switch-text {{viewMode === 'list' ? 'switch-text-active' : ''}}">列表</text>
     </view>
     <view 
       class="switch-btn {{viewMode === 'map' ? 'active' : ''}}" 
       bindtap="switchViewMode"
       data-mode="map"
     >
-      <text class="switch-icon">🗺</text>
-      <text class="switch-text">地图</text>
+      <image wx:if="{{viewMode === 'map'}}" class="switch-icon" src="/images/lucide/map-white.svg" mode="aspectFit"/>
+      <image wx:else class="switch-icon" src="/images/lucide/map.svg" mode="aspectFit"/>
+      <text class="switch-text {{viewMode === 'map' ? 'switch-text-active' : ''}}">地图</text>
     </view>
   </view>
 </view>

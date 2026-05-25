@@ -15,7 +15,7 @@
   <!-- 约球信息 -->
   <view class="info-card">
     <view class="info-item">
-      <view class="info-icon">📅</view>
+      <image class="info-icon" src="/images/lucide/calendar-days.svg" mode="aspectFit"/>
       <view class="info-content">
         <text class="info-label">活动时间</text>
         <text class="info-value">{{match.date}} {{match.startTime}}-{{match.endTime}}</text>
@@ -23,7 +23,7 @@
     </view>
 
     <view class="info-item" bindtap="goToVenue" data-id="{{match.venueId}}">
-      <view class="info-icon">📍</view>
+      <image class="info-icon" src="/images/lucide/map-pin.svg" mode="aspectFit"/>
       <view class="info-content">
         <text class="info-label">活动地点</text>
         <text class="info-value link">{{match.venueName || '待定'}} ></text>
@@ -31,7 +31,7 @@
     </view>
 
     <view class="info-item">
-      <view class="info-icon">👥</view>
+      <image class="info-icon" src="/images/lucide/users.svg" mode="aspectFit"/>
       <view class="info-content">
         <text class="info-label">人数</text>
         <text class="info-value">{{match.currentPlayers || 1}} / {{match.maxPlayers || 4}} 人</text>
@@ -39,7 +39,7 @@
     </view>
 
     <view class="info-item" wx:if="{{match.level}}">
-      <view class="info-icon">🎾</view>
+      <image class="info-icon" src="/images/lucide/circle-dot.svg" mode="aspectFit"/>
       <view class="info-content">
         <text class="info-label">球友水平</text>
         <text class="info-value">{{match.level}}</text>
@@ -47,7 +47,7 @@
     </view>
 
     <view class="info-item" wx:if="{{match.fee}}">
-      <view class="info-icon">💰</view>
+      <image class="info-icon" src="/images/lucide/dollar-sign.svg" mode="aspectFit"/>
       <view class="info-content">
         <text class="info-label">费用</text>
         <text class="info-value">{{match.fee}}</text>

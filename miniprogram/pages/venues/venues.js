@@ -251,11 +251,11 @@ Page({
           iconPath: isIndoor ? '/images/marker-tennis-indoor.png' : '/images/marker-tennis-outdoor.png',
           callout: {
             content: venue.name,
-            color: '#333333',
+            color: '#223a35',
             fontSize: 13,
             borderRadius: 8,
             padding: 10,
-            bgColor: '#ffffff',
+            bgColor: '#fbfff8',
             display: 'BYCLICK',
             textAlign: 'center'
           }

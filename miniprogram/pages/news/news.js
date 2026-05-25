@@ -10,8 +10,6 @@ const NEWS_DATA = [
     category: '赛事',
     source: 'ATP官网',
     date: '2025-06-18',
-    emoji: '🏆',
-    color: '#166534',
     iconPath: '/images/news-icon-trophy.svg'
   },
   {
@@ -22,8 +20,6 @@ const NEWS_DATA = [
     category: '赛事',
     source: 'WTA官网',
     date: '2025-06-05',
-    emoji: '🎾',
-    color: '#b45309',
     iconPath: '/images/news-icon-trophy.svg'
   },
   {
@@ -34,8 +30,6 @@ const NEWS_DATA = [
     category: '赛事',
     source: '网球世界',
     date: '2025-01-28',
-    emoji: '🏅',
-    color: '#0369a1',
     iconPath: '/images/news-icon-trophy.svg'
   },
   {
@@ -46,8 +40,6 @@ const NEWS_DATA = [
     category: '赛事',
     source: 'Tennis.com',
     date: '2024-09-10',
-    emoji: '🗽',
-    color: '#1d4ed8',
     iconPath: '/images/news-icon-trophy.svg'
   },
   {
@@ -58,8 +50,6 @@ const NEWS_DATA = [
     category: '赛事',
     source: 'ATP官网',
     date: '2024-11-18',
-    emoji: '👑',
-    color: '#7c3aed',
     iconPath: '/images/news-icon-trophy.svg'
   },
   {
@@ -70,8 +60,6 @@ const NEWS_DATA = [
     category: '赛事',
     source: 'WTA官网',
     date: '2025-05-20',
-    emoji: '🌟',
-    color: '#dc2626',
     iconPath: '/images/news-icon-trophy.svg'
   },
   {
@@ -82,8 +70,6 @@ const NEWS_DATA = [
     category: '本地',
     source: '上海劳力士大师赛',
     date: '2024-10-14',
-    emoji: '🏙️',
-    color: '#0f766e',
     iconPath: '/images/news-icon-location.svg'
   },
   {
@@ -94,8 +80,6 @@ const NEWS_DATA = [
     category: '本地',
     source: '杭州体育',
     date: '2025-06-02',
-    emoji: '🏡',
-    color: '#16a34a',
     iconPath: '/images/news-icon-location.svg'
   },
   {
@@ -106,8 +90,6 @@ const NEWS_DATA = [
     category: '本地',
     source: '钱江晚报',
     date: '2025-04-15',
-    emoji: '🏟️',
-    color: '#ea580c',
     iconPath: '/images/news-icon-location.svg'
   },
   {
@@ -118,8 +100,6 @@ const NEWS_DATA = [
     category: '本地',
     source: '澎湃新闻',
     date: '2025-06-10',
-    emoji: '🌆',
-    color: '#0369a1',
     iconPath: '/images/news-icon-location.svg'
   },
   {
@@ -130,8 +110,6 @@ const NEWS_DATA = [
     category: '教学',
     source: 'TennisFind教学',
     date: '2025-06-12',
-    emoji: '💪',
-    color: '#7c3aed',
     iconPath: '/images/news-icon-book.svg'
   },
   {
@@ -142,8 +120,6 @@ const NEWS_DATA = [
     category: '教学',
     source: '网球技术周刊',
     date: '2025-05-28',
-    emoji: '🎯',
-    color: '#0f766e',
     iconPath: '/images/news-icon-book.svg'
   },
   {
@@ -154,8 +130,6 @@ const NEWS_DATA = [
     category: '教学',
     source: 'TennisFind教学',
     date: '2025-06-08',
-    emoji: '🥅',
-    color: '#b45309',
     iconPath: '/images/news-icon-book.svg'
   },
   {
@@ -166,8 +140,6 @@ const NEWS_DATA = [
     category: '赛事',
     source: '新华社',
     date: '2025-01-10',
-    emoji: '🇨🇳',
-    color: '#dc2626',
     iconPath: '/images/news-icon-trophy.svg'
   },
   {
@@ -178,8 +150,6 @@ const NEWS_DATA = [
     category: '教学',
     source: 'TennisFind教学',
     date: '2025-06-15',
-    emoji: '📖',
-    color: '#16a34a',
     iconPath: '/images/news-icon-book.svg'
   }
 ];
@@ -191,6 +161,22 @@ const CATEGORIES = [
   { key: '本地', label: '本地' },
   { key: '教学', label: '教学' }
 ];
+
+const CATEGORY_CLASS_MAP = { '赛事': 'match', '本地': 'local', '教学': 'learn' };
+const ICON_PATH_MAP = {
+  '赛事': '/images/news-icon-trophy.svg',
+  '本地': '/images/news-icon-location.svg',
+  '教学': '/images/news-icon-book.svg'
+};
+
+function enrichNewsItem(item) {
+  return {
+    ...item,
+    categoryClass: CATEGORY_CLASS_MAP[item.category] || 'match',
+    categoryLabel: item.category,
+    iconPath: item.iconPath || ICON_PATH_MAP[item.category] || '/images/news-icon-tennis.svg'
+  };
+}
 
 Page({
   data: {
@@ -220,21 +206,10 @@ Page({
 
   // 过滤并更新列表
   filterNews: function (category) {
-    const categoryClassMap = { '赛事': 'match', '本地': 'local', '教学': 'learn' };
-    const iconPathMap = {
-      '赛事': '/images/news-icon-trophy.svg',
-      '本地': '/images/news-icon-location.svg',
-      '教学': '/images/news-icon-book.svg'
-    };
     const filtered = (category === 'all'
       ? NEWS_DATA
       : NEWS_DATA.filter(item => item.category === category)
-    ).map(item => ({
-      ...item,
-      categoryClass: categoryClassMap[item.category] || 'match',
-      categoryLabel: item.category,
-      iconPath: item.iconPath || iconPathMap[item.category] || '/images/news-icon-tennis.svg'
-    }));
+    ).map(enrichNewsItem);
     this.setData({ newsList: filtered });
   },
 
@@ -243,7 +218,7 @@ Page({
     const id = e.currentTarget.dataset.id;
     const news = NEWS_DATA.find(item => item.id === id);
     if (news) {
-      this.setData({ showModal: true, modalNews: news });
+      this.setData({ showModal: true, modalNews: enrichNewsItem(news) });
     }
   },
 

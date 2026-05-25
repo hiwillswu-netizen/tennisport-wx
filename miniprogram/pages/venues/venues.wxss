@@ -1,101 +1,130 @@
 /* pages/venues/venues.wxss */
 page {
   overflow-x: hidden;
-  background-color: #fff;
+  background: var(--tf-surface);
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #fff;
   position: relative;
-  overflow-x: hidden;
   width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    linear-gradient(160deg, oklch(98% 0.035 112), oklch(95% 0.045 172) 48%, oklch(98% 0.03 74));
 }
 
-/* 固定顶部区域 */
 .fixed-top {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: #f0fdf4;
-  /* 网球网格纹理 */
-  background-image: 
-    /* 右上角大网球轮廓 */
-    radial-gradient(circle at calc(100% - 40rpx) 50rpx, transparent 50rpx, rgba(22, 163, 74, 0.15) 50rpx, rgba(22, 163, 74, 0.15) 54rpx, transparent 54rpx),
-    /* 网球上的弧线 */
-    radial-gradient(circle at calc(100% - 70rpx) 30rpx, transparent 30rpx, rgba(22, 163, 74, 0.1) 30rpx, rgba(22, 163, 74, 0.1) 32rpx, transparent 32rpx),
-    /* 网格线条 */
-    linear-gradient(90deg, rgba(22, 163, 74, 0.08) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(22, 163, 74, 0.08) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 24rpx 24rpx, 24rpx 24rpx;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, oklch(47% 0.16 166), oklch(35% 0.13 174) 62%, oklch(66% 0.21 42));
+  border-bottom-left-radius: 44rpx;
+  border-bottom-right-radius: 12rpx;
+  box-shadow: 0 30rpx 70rpx oklch(28% 0.07 165 / 0.22);
+  padding-bottom: 28rpx;
 }
 
-/* 顶部占位，防止内容被固定栏遮挡 */
+.fixed-top::before {
+  content: '';
+  position: absolute;
+  width: 460rpx;
+  height: 220rpx;
+  right: -120rpx;
+  top: -46rpx;
+  transform: rotate(-18deg);
+  border: 2rpx solid oklch(100% 0 0 / 0.22);
+  background:
+    repeating-linear-gradient(90deg, oklch(100% 0 0 / 0.18) 0 2rpx, transparent 2rpx 30rpx),
+    repeating-linear-gradient(0deg, oklch(100% 0 0 / 0.12) 0 2rpx, transparent 2rpx 30rpx);
+}
+
+.fixed-top::after {
+  content: '';
+  position: absolute;
+  width: 160rpx;
+  height: 160rpx;
+  right: 36rpx;
+  bottom: 24rpx;
+  border-radius: 50%;
+  border: 4rpx solid oklch(88% 0.17 116 / 0.36);
+  opacity: 0.7;
+}
+
 .fixed-top-placeholder {
-  height: 260rpx;
+  height: 338rpx;
 }
 
-/* 头部区域 */
 .header {
+  position: relative;
+  z-index: 1;
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  padding: 32rpx 32rpx 20rpx;
-  background-color: transparent;
+  justify-content: space-between;
+  padding: 36rpx 34rpx 22rpx;
 }
 
 .header-left {
   flex: 1;
+  min-width: 0;
 }
 
 .header-title {
   display: flex;
   align-items: center;
-  margin-bottom: 8rpx;
+  margin-bottom: 10rpx;
 }
 
 .location-icon {
-  width: 44rpx;
-  height: 44rpx;
-  margin-right: 8rpx;
-  flex-shrink: 0;
+  width: 46rpx;
+  height: 46rpx;
+  margin-right: 10rpx;
 }
 
 .title-text {
-  font-size: 40rpx;
-  font-weight: 700;
-  color: #1a1a1a;
+  color: oklch(99% 0.015 112);
+  font-family: var(--tf-display);
+  font-size: 46rpx;
+  font-weight: 800;
+  letter-spacing: 0;
 }
 
 .header-subtitle {
+  color: #e8fff2;
+  color: oklch(93% 0.05 150 / 0.82);
   font-size: 24rpx;
-  color: #999;
+  font-weight: 700;
+  text-shadow: 0 2rpx 8rpx rgba(15, 84, 62, 0.38);
 }
 
 .city-tag {
-  padding: 10rpx 20rpx;
-  background-color: #dcfce7;
-  color: #16a34a;
-  border-radius: 32rpx;
+  padding: 11rpx 22rpx;
+  color: oklch(31% 0.12 166);
+  background: oklch(96% 0.08 130);
+  border-radius: 999rpx;
   font-size: 24rpx;
-  font-weight: 500;
+  font-weight: 800;
+  box-shadow: 0 10rpx 26rpx oklch(20% 0.06 166 / 0.18);
 }
 
-/* 搜索栏和筛选下拉 */
 .search-bar {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
-  padding: 16rpx 24rpx;
-  background-color: transparent;
-  border-bottom: 1rpx solid rgba(22, 163, 74, 0.1);
+  flex-wrap: wrap;
   gap: 12rpx;
+  margin: 0 24rpx;
+  padding: 18rpx;
+  background: #ffffff;
+  border: 1rpx solid oklch(100% 0 0 / 0.46);
+  border-radius: 28rpx;
+  box-shadow: 0 18rpx 50rpx oklch(20% 0.05 166 / 0.2);
 }
 
-/* 筛选下拉选择器 */
 .filter-picker {
   flex-shrink: 0;
 }
@@ -103,109 +132,99 @@ page {
 .filter-dropdown {
   display: flex;
   align-items: center;
-  padding: 14rpx 16rpx;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 8rpx;
-  border: 1rpx solid rgba(22, 163, 74, 0.15);
-  height: 36rpx;
-  box-sizing: content-box;
+  height: 58rpx;
+  padding: 0 18rpx;
+  background: oklch(94% 0.06 150);
+  border-radius: 999rpx;
+  box-sizing: border-box;
 }
 
 .filter-label {
-  font-size: 24rpx;
-  color: #333;
-  max-width: 80rpx;
+  max-width: 96rpx;
   overflow: hidden;
+  color: var(--tf-primary-deep);
+  font-size: 23rpx;
+  font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .dropdown-arrow {
+  margin-left: 6rpx;
+  color: oklch(46% 0.11 166);
   font-size: 16rpx;
-  color: #999;
-  margin-left: 4rpx;
 }
 
 .search-input-wrapper {
-  flex: 1;
   display: flex;
+  flex: 1;
+  min-width: 250rpx;
+  height: 58rpx;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 8rpx;
-  padding: 14rpx 16rpx;
-  min-width: 0;
-  transition: all 0.2s;
-  border: 1rpx solid rgba(22, 163, 74, 0.15);
-  height: 36rpx;
-  box-sizing: content-box;
+  padding: 0 18rpx;
+  background: oklch(98% 0.015 105);
+  border: 2rpx solid transparent;
+  border-radius: 999rpx;
+  box-sizing: border-box;
 }
 
 .search-input-wrapper.focused {
-  background-color: #fff;
-  box-shadow: 0 0 0 2rpx #16a34a;
-  border-color: transparent;
+  background: #ffffff;
+  border-color: var(--tf-accent);
+  box-shadow: 0 0 0 6rpx oklch(72% 0.2 42 / 0.16);
 }
 
 .search-icon {
-  font-size: 26rpx;
-  margin-right: 8rpx;
-  opacity: 0.5;
+  margin-right: 10rpx;
 }
 
 .search-input {
   flex: 1;
-  font-size: 26rpx;
-  color: #333;
   min-width: 0;
+  color: var(--tf-ink);
+  font-size: 26rpx;
 }
 
 .search-placeholder {
-  color: #999;
+  color: var(--tf-muted);
 }
 
 .clear-btn {
-  width: 32rpx;
-  height: 32rpx;
   display: flex;
+  width: 36rpx;
+  height: 36rpx;
   align-items: center;
   justify-content: center;
-  background-color: #ccc;
-  border-radius: 50%;
   margin-left: 8rpx;
-  flex-shrink: 0;
+  background: oklch(90% 0.03 160);
+  border-radius: 50%;
 }
 
 .clear-icon {
-  font-size: 18rpx;
-  color: #fff;
+  width: 22rpx;
+  height: 22rpx;
 }
 
-/* 结果统计 */
-.result-info {
-  padding: 20rpx 32rpx 8rpx;
-}
-
-.result-count {
-  font-size: 24rpx;
-  color: #999;
-}
-
-/* 加载状态 */
-.loading-wrapper {
+.loading-wrapper,
+.empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 120rpx 40rpx;
+  padding: 150rpx 40rpx;
+}
+
+.loading-spinner,
+.loadmore-spinner {
+  border: 4rpx solid oklch(89% 0.04 155);
+  border-top-color: var(--tf-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 .loading-spinner {
   width: 60rpx;
   height: 60rpx;
-  border: 4rpx solid #e5e5e5;
-  border-top-color: #16a34a;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
   margin-bottom: 20rpx;
 }
 
@@ -213,194 +232,207 @@ page {
   to { transform: rotate(360deg); }
 }
 
-.loading-text {
-  font-size: 28rpx;
-  color: #999;
-}
-
-/* 空状态 */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 120rpx 40rpx;
-}
-
-.empty-icon {
-  font-size: 100rpx;
-  margin-bottom: 24rpx;
-}
-
-.empty-text {
-  font-size: 28rpx;
-  color: #999;
-  margin-bottom: 32rpx;
+.loading-text,
+.empty-text,
+.loadmore-text,
+.loadmore-end-text {
+  color: var(--tf-muted);
+  font-size: 26rpx;
 }
 
 .empty-action {
-  padding: 16rpx 40rpx;
-  background-color: #16a34a;
-  color: #fff;
-  border-radius: 40rpx;
+  margin-top: 30rpx;
+  padding: 18rpx 42rpx;
+  color: oklch(100% 0 0);
+  background: linear-gradient(135deg, var(--tf-primary), var(--tf-primary-deep));
+  border-radius: 999rpx;
   font-size: 28rpx;
+  font-weight: 800;
+  box-shadow: 0 16rpx 38rpx var(--tf-shadow);
 }
 
-/* 场馆滚动区域 */
 .venue-scroll {
   flex: 1;
-  height: calc(100vh - 260rpx);
-  background-color: #fff;
+  height: calc(100vh - 304rpx);
 }
 
-/* 场馆列表 */
 .venue-list {
-  padding: 0 24rpx 180rpx;
-  background-color: #fff;
+  padding: 10rpx 24rpx 270rpx;
 }
 
-/* 场馆卡片 */
 .venue-card {
-  background-color: #fff;
-  border-radius: 20rpx;
-  padding: 28rpx;
-  margin-bottom: 24rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08), 0 1rpx 4rpx rgba(0, 0, 0, 0.04);
-  border: 1rpx solid #f0f0f0;
-  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 26rpx;
+  padding: 30rpx;
+  background: #ffffff;
+  border: 1rpx solid oklch(92% 0.04 150);
+  border-radius: 28rpx;
+  box-shadow: 0 24rpx 56rpx var(--tf-shadow);
+  transition: transform 0.15s ease;
+}
+
+.venue-card:nth-child(2n) {
+  margin-left: 0;
+  border-top-left-radius: 28rpx;
+}
+
+.venue-card:nth-child(3n) {
+  margin-right: 0;
+  border-bottom-right-radius: 28rpx;
+}
+
+.venue-card::before {
+  content: '';
+  position: absolute;
+  width: 160rpx;
+  height: 160rpx;
+  right: -56rpx;
+  top: -52rpx;
+  transform: rotate(18deg);
+  background: oklch(92% 0.08 128);
+  border-radius: 32rpx;
 }
 
 .venue-card-hover {
-  transform: scale(0.98);
-  background-color: #fafafa;
+  transform: scale(0.985) translateY(2rpx);
+}
+
+.venue-header,
+.venue-footer,
+.venue-info-row,
+.venue-booking {
+  position: relative;
+  z-index: 1;
 }
 
 .venue-header {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 16rpx;
+  justify-content: space-between;
+  margin-bottom: 18rpx;
 }
 
 .venue-name {
   flex: 1;
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #1a1a1a;
-  line-height: 1.4;
   margin-right: 16rpx;
+  color: var(--tf-ink);
+  font-size: 34rpx;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
-.venue-type {
+.venue-type,
+.popup-type {
   flex-shrink: 0;
   padding: 8rpx 16rpx;
-  border-radius: 24rpx;
+  border-radius: 999rpx;
   font-size: 22rpx;
-  font-weight: 500;
+  font-weight: 800;
 }
 
-.type-indoor {
-  background-color: #dbeafe;
-  color: #2563eb;
+.type-indoor,
+.popup-type.type-indoor {
+  color: oklch(40% 0.15 235);
+  background: oklch(93% 0.06 235);
 }
 
-.type-outdoor {
-  background-color: #dcfce7;
-  color: #16a34a;
+.type-outdoor,
+.popup-type.type-outdoor {
+  color: var(--tf-primary-deep);
+  background: var(--tf-primary-soft);
+}
+
+.venue-address,
+.info-item,
+.popup-address,
+.popup-price,
+.popup-hours {
+  display: flex;
+  align-items: center;
 }
 
 .venue-address {
-  display: flex;
+  position: relative;
+  z-index: 1;
   align-items: flex-start;
-  margin-bottom: 12rpx;
+  margin-bottom: 14rpx;
 }
 
-.venue-address .icon {
-  font-size: 24rpx;
-  margin-right: 8rpx;
-  flex-shrink: 0;
+.venue-address .icon,
+.info-item .icon,
+.popup-icon {
+  margin-right: 10rpx;
 }
 
-.address-text {
-  font-size: 26rpx;
-  color: #666;
-  line-height: 1.5;
+.address-text,
+.info-text,
+.popup-address {
+  color: var(--tf-ink-soft);
+  font-size: 25rpx;
+  line-height: 1.55;
 }
 
 .venue-info-row {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 24rpx;
-  margin-bottom: 16rpx;
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-}
-
-.info-item .icon {
-  font-size: 24rpx;
-  margin-right: 6rpx;
-}
-
-.info-text {
-  font-size: 24rpx;
-  color: #999;
+  gap: 22rpx;
+  margin-bottom: 18rpx;
 }
 
 .venue-footer {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .venue-tags {
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   gap: 10rpx;
 }
 
 .tag {
-  padding: 6rpx 14rpx;
-  background-color: #f5f5f5;
-  color: #666;
+  padding: 8rpx 14rpx;
+  color: var(--tf-primary-deep);
+  background: oklch(94% 0.05 145);
+  border-radius: 999rpx;
   font-size: 22rpx;
-  border-radius: 6rpx;
+  font-weight: 700;
 }
 
 .venue-price {
-  flex-shrink: 0;
   margin-left: 16rpx;
 }
 
 .price-value {
+  color: var(--tf-accent-deep);
   font-size: 28rpx;
-  font-weight: 600;
-  color: #f97316;
+  font-weight: 900;
 }
 
 .venue-booking {
   display: flex;
   align-items: center;
-  margin-top: 16rpx;
-  padding-top: 16rpx;
-  border-top: 1rpx solid #f5f5f5;
+  margin-top: 18rpx;
+  padding: 16rpx 18rpx;
+  color: #c45c18;
+  background: #fff3dc;
+  border-radius: 18rpx;
 }
 
-.booking-text {
+.booking-text,
+.booking-arrow {
+  color: #c45c18;
   font-size: 24rpx;
-  color: #3b82f6;
+  font-weight: 800;
 }
 
 .booking-arrow {
-  font-size: 24rpx;
-  color: #3b82f6;
   margin-left: 8rpx;
 }
 
-/* 加载更多 */
 .loadmore {
   display: flex;
   align-items: center;
@@ -411,34 +443,20 @@ page {
 .loadmore-spinner {
   width: 32rpx;
   height: 32rpx;
-  border: 3rpx solid #e5e5e5;
-  border-top-color: #16a34a;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
   margin-right: 16rpx;
-}
-
-.loadmore-text {
-  font-size: 24rpx;
-  color: #999;
 }
 
 .loadmore-end {
   text-align: center;
-  padding: 32rpx 0 60rpx;
+  padding: 34rpx 0 70rpx;
 }
 
-.loadmore-end-text {
-  font-size: 24rpx;
-  color: #ccc;
-}
-
-/* 地图容器 */
 .map-container {
-  flex: 1;
-  height: calc(100vh - 260rpx);
   position: relative;
-  background-color: #fff;
+  flex: 1;
+  height: calc(100vh - 304rpx);
+  overflow: hidden;
+  border-top-left-radius: 36rpx;
 }
 
 .venue-map {
@@ -446,39 +464,40 @@ page {
   height: 100%;
 }
 
-/* 我的位置按钮 */
 .my-location-btn {
   position: absolute;
-  right: 32rpx;
-  bottom: 140rpx;
-  width: 88rpx;
-  height: 88rpx;
-  background-color: #fff;
-  border-radius: 50%;
+  right: 30rpx;
+  bottom: 142rpx;
+  z-index: 10;
   display: flex;
+  width: 92rpx;
+  height: 92rpx;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
-  z-index: 10;
+  background: #ffffff;
+  border: 1rpx solid oklch(90% 0.04 155);
+  border-radius: 50%;
+  box-shadow: 0 18rpx 42rpx var(--tf-shadow);
 }
 
 .location-btn-icon {
-  font-size: 40rpx;
+  width: 42rpx;
+  height: 42rpx;
 }
 
-/* 球馆信息弹窗 */
 .venue-popup {
   position: absolute;
   left: 24rpx;
   right: 24rpx;
-  bottom: 200rpx;
-  background-color: #fff;
-  border-radius: 24rpx;
-  box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.15);
-  transform: translateY(120%);
-  transition: transform 0.3s ease;
+  bottom: 198rpx;
   z-index: 20;
   overflow: hidden;
+  background: #ffffff;
+  border: 1rpx solid oklch(91% 0.04 150);
+  border-radius: 30rpx;
+  box-shadow: 0 30rpx 70rpx oklch(20% 0.05 166 / 0.24);
+  transform: translateY(120%);
+  transition: transform 0.3s ease;
 }
 
 .venue-popup.show {
@@ -487,285 +506,119 @@ page {
 
 .popup-close {
   position: absolute;
-  top: 16rpx;
-  right: 16rpx;
-  width: 48rpx;
-  height: 48rpx;
+  top: 18rpx;
+  right: 18rpx;
+  z-index: 1;
   display: flex;
+  width: 50rpx;
+  height: 50rpx;
   align-items: center;
   justify-content: center;
-  font-size: 28rpx;
-  color: #999;
-  background-color: #f5f5f5;
+  background: oklch(94% 0.03 150);
   border-radius: 50%;
-  z-index: 1;
+}
+
+.popup-close-icon {
+  width: 24rpx;
+  height: 24rpx;
 }
 
 .popup-content {
-  padding: 28rpx;
+  padding: 30rpx;
 }
 
 .popup-header {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
+  justify-content: space-between;
   margin-bottom: 16rpx;
-  padding-right: 48rpx;
+  padding-right: 54rpx;
 }
 
 .popup-name {
   flex: 1;
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #1a1a1a;
-  line-height: 1.4;
-}
-
-.popup-type {
-  flex-shrink: 0;
-  padding: 6rpx 14rpx;
-  border-radius: 20rpx;
-  font-size: 22rpx;
-  font-weight: 500;
-  margin-left: 16rpx;
-}
-
-.popup-type.type-indoor {
-  background-color: #dbeafe;
-  color: #2563eb;
-}
-
-.popup-type.type-outdoor {
-  background-color: #dcfce7;
-  color: #16a34a;
-}
-
-.popup-address {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 12rpx;
-  font-size: 26rpx;
-  color: #666;
-}
-
-.popup-icon {
-  margin-right: 8rpx;
-  flex-shrink: 0;
+  color: var(--tf-ink);
+  font-size: 33rpx;
+  font-weight: 900;
+  line-height: 1.35;
 }
 
 .popup-info {
   display: flex;
-  gap: 32rpx;
-  margin-bottom: 16rpx;
-}
-
-.popup-price,
-.popup-hours {
-  display: flex;
-  align-items: center;
-  font-size: 24rpx;
-  color: #999;
+  gap: 28rpx;
+  margin: 14rpx 0 18rpx;
 }
 
 .popup-price {
-  color: #f97316;
-  font-weight: 500;
+  color: var(--tf-accent-deep);
+  font-weight: 800;
 }
 
 .popup-action {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16rpx;
-  margin-top: 8rpx;
-  background-color: #16a34a;
-  border-radius: 12rpx;
+  padding: 18rpx;
+  background: linear-gradient(135deg, var(--tf-primary), var(--tf-primary-deep));
+  border-radius: 999rpx;
 }
 
-.popup-action-text {
+.popup-action-text,
+.popup-arrow {
+  color: oklch(100% 0 0);
   font-size: 28rpx;
-  color: #fff;
-  font-weight: 500;
+  font-weight: 800;
 }
 
 .popup-arrow {
-  font-size: 28rpx;
-  color: #fff;
   margin-left: 8rpx;
 }
 
-/* 视图切换按钮 */
 .view-switcher {
   position: fixed;
   bottom: calc(env(safe-area-inset-bottom) + 20rpx);
   left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  background-color: #fff;
-  border-radius: 48rpx;
-  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.15);
-  overflow: hidden;
   z-index: 100;
+  display: flex;
+  padding: 8rpx;
+  background: #ffffff;
+  border: 1rpx solid oklch(92% 0.04 150);
+  border-radius: 999rpx;
+  box-shadow: 0 18rpx 50rpx var(--tf-shadow);
+  transform: translateX(-50%);
 }
 
 .switch-btn {
   display: flex;
   align-items: center;
-  padding: 20rpx 32rpx;
-  transition: all 0.2s;
+  min-width: 128rpx;
+  justify-content: center;
+  padding: 18rpx 24rpx;
+  border-radius: 999rpx;
 }
 
 .switch-btn.active {
-  background-color: #16a34a;
-}
-
-.switch-btn.active .switch-icon,
-.switch-btn.active .switch-text {
-  color: #fff;
+  background: var(--tf-primary-deep);
 }
 
 .switch-icon {
-  font-size: 28rpx;
+  width: 28rpx;
+  height: 28rpx;
   margin-right: 8rpx;
-  color: #666;
 }
 
 .switch-text {
+  color: #5f716b;
   font-size: 26rpx;
-  font-weight: 500;
-  color: #666;
+  font-weight: 800;
 }
 
-/* 筛选抽屉 */
-.filter-drawer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-  visibility: hidden;
+.switch-btn.active .switch-text {
+  color: oklch(100% 0 0);
 }
 
-.filter-drawer.open {
-  visibility: visible;
-}
-
-.filter-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.filter-drawer.open .filter-mask {
-  opacity: 1;
-}
-
-.filter-content {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 80%;
-  max-width: 600rpx;
-  background-color: #fff;
-  transform: translateX(100%);
-  transition: transform 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-
-.filter-drawer.open .filter-content {
-  transform: translateX(0);
-}
-
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 32rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.filter-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.filter-close {
-  width: 48rpx;
-  height: 48rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32rpx;
-  color: #999;
-}
-
-.filter-section {
-  padding: 32rpx;
-  border-bottom: 1rpx solid #f5f5f5;
-}
-
-.filter-section-title {
-  font-size: 28rpx;
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 20rpx;
-}
-
-.filter-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16rpx;
-}
-
-.filter-option {
-  padding: 16rpx 32rpx;
-  background-color: #f5f5f5;
-  border-radius: 40rpx;
-  font-size: 26rpx;
-  color: #666;
-  transition: all 0.2s;
-}
-
-.filter-option.active {
-  background-color: #dcfce7;
-  color: #16a34a;
-  font-weight: 500;
-}
-
-.filter-actions {
-  margin-top: auto;
-  display: flex;
-  padding: 32rpx;
-  gap: 24rpx;
-  border-top: 1rpx solid #f0f0f0;
-}
-
-.filter-reset {
-  flex: 1;
-  padding: 24rpx;
-  text-align: center;
-  background-color: #f5f5f5;
-  border-radius: 48rpx;
-  font-size: 28rpx;
-  color: #666;
-}
-
-.filter-confirm {
-  flex: 1;
-  padding: 24rpx;
-  text-align: center;
-  background-color: #16a34a;
-  border-radius: 48rpx;
-  font-size: 28rpx;
-  color: #fff;
-  font-weight: 500;
+.switch-btn.active .switch-text,
+.switch-text-active {
+  color: #fffffb;
+  text-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.18);
 }

@@ -7,7 +7,7 @@
       <button class="avatar-wrapper" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
         <image class="logged-avatar" src="{{userInfo.avatarTempUrl || userInfo.avatarUrl}}" mode="aspectFill" wx:if="{{userInfo.avatarTempUrl || userInfo.avatarUrl}}"></image>
         <view class="login-avatar" wx:else>
-          <text class="login-icon">👤</text>
+          <image class="login-icon" src="/images/lucide/user.svg" mode="aspectFit"/>
         </view>
       </button>
       <view class="user-info">
@@ -18,7 +18,7 @@
     </view>
     <view class="user-card login-card" wx:else bindtap="getUserProfile" hover-class="user-card-hover">
       <view class="login-avatar">
-        <text class="login-icon">👤</text>
+        <image class="login-icon" src="/images/lucide/user.svg" mode="aspectFit"/>
       </view>
       <view class="user-info">
         <text class="login-text">点击登录</text>
@@ -50,17 +50,17 @@
   <view class="menu-section">
     <view class="menu-group">
       <view class="menu-item" bindtap="goToMyMatches" hover-class="menu-item-hover">
-        <text class="menu-icon">📝</text>
+        <image class="menu-icon" src="/images/lucide/file-text.svg" mode="aspectFit"/>
         <text class="menu-title">我的发布</text>
         <text class="menu-arrow">›</text>
       </view>
       <view class="menu-item" bindtap="goToMyJoins" hover-class="menu-item-hover">
-        <text class="menu-icon">🎾</text>
+        <image class="menu-icon" src="/images/lucide/circle-dot.svg" mode="aspectFit"/>
         <text class="menu-title">我参与的</text>
         <text class="menu-arrow">›</text>
       </view>
       <view class="menu-item" bindtap="goToFavorites" hover-class="menu-item-hover">
-        <text class="menu-icon">❤️</text>
+        <image class="menu-icon" src="/images/lucide/heart.svg" mode="aspectFit"/>
         <text class="menu-title">收藏场馆</text>
         <view class="menu-badge" wx:if="{{collectCount > 0}}">{{collectCount}}</view>
         <text class="menu-arrow">›</text>
@@ -69,17 +69,17 @@
 
     <view class="menu-group">
       <view class="menu-item" bindtap="goToFeedback" hover-class="menu-item-hover">
-        <text class="menu-icon">💬</text>
+        <image class="menu-icon" src="/images/lucide/message-circle.svg" mode="aspectFit"/>
         <text class="menu-title">意见反馈</text>
         <text class="menu-arrow">›</text>
       </view>
       <view class="menu-item" bindtap="goToAbout" hover-class="menu-item-hover">
-        <text class="menu-icon">ℹ️</text>
+        <image class="menu-icon" src="/images/lucide/info.svg" mode="aspectFit"/>
         <text class="menu-title">关于我们</text>
         <text class="menu-arrow">›</text>
       </view>
       <button class="menu-item contact-btn" open-type="contact" hover-class="menu-item-hover">
-        <text class="menu-icon">🎧</text>
+        <image class="menu-icon" src="/images/lucide/headphones.svg" mode="aspectFit"/>
         <text class="menu-title">联系客服</text>
       </button>
     </view>

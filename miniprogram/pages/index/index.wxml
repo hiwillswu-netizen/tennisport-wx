@@ -3,7 +3,7 @@
   <!-- 搜索栏 -->
   <view class="search-bar">
     <view class="search-input-wrap">
-      <image class="search-icon" src="/images/icon-search.png" mode="aspectFit"></image>
+      <image class="search-icon" src="/images/lucide/search.svg" mode="aspectFit"></image>
       <input 
         class="search-input" 
         placeholder="搜索场馆名称或地址" 
@@ -19,25 +19,25 @@
   <view class="quick-actions">
     <view class="action-item" bindtap="goToVenues">
       <view class="action-icon venue-icon">
-        <text class="icon-text">T</text>
+        <image class="action-icon-img" src="/images/lucide/map-pin.svg" mode="aspectFit"/>
       </view>
       <text class="action-text">找场馆</text>
     </view>
     <view class="action-item" bindtap="goToMatches">
       <view class="action-icon match-icon">
-        <text class="icon-text">P</text>
+        <image class="action-icon-img" src="/images/lucide/users.svg" mode="aspectFit"/>
       </view>
       <text class="action-text">找球友</text>
     </view>
     <view class="action-item" bindtap="goToPublish">
       <view class="action-icon publish-icon">
-        <text class="icon-text">+</text>
+        <image class="action-icon-img" src="/images/lucide/plus.svg" mode="aspectFit"/>
       </view>
       <text class="action-text">发约球</text>
     </view>
     <view class="action-item" bindtap="goToProfile">
       <view class="action-icon profile-icon">
-        <text class="icon-text">M</text>
+        <image class="action-icon-img" src="/images/lucide/user.svg" mode="aspectFit"/>
       </view>
       <text class="action-text">我的</text>
     </view>

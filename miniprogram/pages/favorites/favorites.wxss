@@ -1,188 +1,178 @@
 /* pages/favorites/favorites.wxss */
 .container {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background:
+    linear-gradient(158deg, oklch(98% 0.035 110), oklch(95% 0.04 180) 54%, oklch(98% 0.03 78));
 }
 
-/* 加载状态 */
-.loading-wrapper {
+.loading-wrapper,
+.empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 120rpx 40rpx;
+  padding: 180rpx 40rpx;
 }
 
 .loading-spinner {
   width: 60rpx;
   height: 60rpx;
-  border: 4rpx solid #e5e5e5;
-  border-top-color: #16a34a;
+  margin-bottom: 20rpx;
+  border: 4rpx solid oklch(89% 0.04 155);
+  border-top-color: var(--tf-accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  margin-bottom: 20rpx;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-.loading-text {
-  font-size: 28rpx;
-  color: #999;
-}
-
-/* 空状态 */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 200rpx 40rpx;
-}
-
-.empty-icon {
-  font-size: 100rpx;
-  margin-bottom: 24rpx;
-}
-
+.loading-text,
 .empty-text {
+  color: var(--tf-muted);
   font-size: 28rpx;
-  color: #999;
-  margin-bottom: 32rpx;
 }
 
 .empty-action {
-  padding: 20rpx 60rpx;
-  background-color: #16a34a;
-  color: #fff;
-  border-radius: 40rpx;
+  margin-top: 32rpx;
+  padding: 20rpx 58rpx;
+  color: oklch(100% 0 0);
+  background: linear-gradient(135deg, var(--tf-primary), var(--tf-primary-deep));
+  border-radius: 999rpx;
   font-size: 28rpx;
+  font-weight: 850;
 }
 
-/* 场馆列表 */
 .venue-list {
-  padding: 20rpx 24rpx;
+  padding: 24rpx;
 }
 
-/* 场馆卡片 */
 .venue-card {
-  background-color: #fff;
-  border-radius: 20rpx;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24rpx;
   padding: 28rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
-  border: 1rpx solid #f0f0f0;
-  transition: all 0.15s;
+  background: #ffffff;
+  border: 1rpx solid oklch(92% 0.04 150);
+  border-radius: 30rpx;
+  box-shadow: 0 22rpx 54rpx var(--tf-shadow);
+}
+
+.venue-card:nth-child(2n) {
+  margin-left: 34rpx;
+  border-top-left-radius: 8rpx;
 }
 
 .venue-card-hover {
-  transform: scale(0.98);
-  background-color: #fafafa;
+  transform: scale(0.985);
+}
+
+.venue-header,
+.venue-address,
+.venue-info-row,
+.venue-footer {
+  position: relative;
+  z-index: 1;
 }
 
 .venue-header {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
+  justify-content: space-between;
   margin-bottom: 16rpx;
 }
 
 .venue-name {
   flex: 1;
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #1a1a1a;
-  line-height: 1.4;
   margin-right: 16rpx;
+  color: var(--tf-ink);
+  font-size: 32rpx;
+  font-weight: 850;
+  line-height: 1.4;
 }
 
 .venue-type {
   flex-shrink: 0;
   padding: 8rpx 16rpx;
-  border-radius: 24rpx;
+  border-radius: 999rpx;
   font-size: 22rpx;
-  font-weight: 500;
+  font-weight: 850;
 }
 
 .type-indoor {
-  background-color: #dbeafe;
-  color: #2563eb;
+  color: oklch(42% 0.15 235);
+  background: oklch(93% 0.06 235);
 }
 
 .type-outdoor {
-  background-color: #dcfce7;
-  color: #16a34a;
+  color: var(--tf-primary-deep);
+  background: var(--tf-primary-soft);
+}
+
+.venue-address,
+.info-item,
+.venue-info-row,
+.venue-footer {
+  display: flex;
+  align-items: center;
 }
 
 .venue-address {
-  display: flex;
   align-items: flex-start;
   margin-bottom: 12rpx;
 }
 
-.venue-address .icon {
-  font-size: 24rpx;
-  margin-right: 8rpx;
-  flex-shrink: 0;
+.venue-address .icon,
+.info-item .icon {
+  margin-right: 9rpx;
 }
 
-.address-text {
-  font-size: 26rpx;
-  color: #666;
-  line-height: 1.5;
+.address-text,
+.info-text {
+  color: var(--tf-ink-soft);
+  font-size: 25rpx;
+  line-height: 1.55;
 }
 
 .venue-info-row {
-  display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 24rpx;
+  gap: 22rpx;
   margin-bottom: 16rpx;
 }
 
-.info-item {
-  display: flex;
-  align-items: center;
-}
-
-.info-item .icon {
-  font-size: 24rpx;
-  margin-right: 6rpx;
-}
-
-.info-text {
-  font-size: 24rpx;
-  color: #999;
-}
-
 .venue-footer {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .venue-tags {
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   gap: 10rpx;
-  flex: 1;
 }
 
 .tag {
-  padding: 6rpx 14rpx;
-  background-color: #f5f5f5;
-  color: #666;
+  padding: 8rpx 14rpx;
+  color: var(--tf-primary-deep);
+  background: oklch(94% 0.05 145);
+  border-radius: 999rpx;
   font-size: 22rpx;
-  border-radius: 6rpx;
+  font-weight: 750;
 }
 
 .remove-btn {
-  padding: 16rpx;
-  margin: -16rpx;
+  display: flex;
+  width: 54rpx;
+  height: 54rpx;
+  align-items: center;
+  justify-content: center;
   margin-left: 16rpx;
+  background: oklch(95% 0.04 28);
+  border-radius: 50%;
 }
 
 .remove-icon {
-  font-size: 32rpx;
+  width: 30rpx;
+  height: 30rpx;
 }

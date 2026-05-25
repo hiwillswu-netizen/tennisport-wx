@@ -19,27 +19,27 @@
       
       <!-- 地址 -->
       <view class="info-row" bindtap="openLocation">
-        <text class="row-icon">📍</text>
+        <image class="row-icon" src="/images/lucide/map-pin.svg" mode="aspectFit"/>
         <text class="row-text">{{venue.address}}</text>
         <view class="row-action nav-action">
-          <text class="action-icon">🧭</text>
+          <image class="action-icon" src="/images/lucide/navigation.svg" mode="aspectFit"/>
           <text class="action-text">导航</text>
         </view>
       </view>
       
       <!-- 电话 -->
       <view class="info-row" wx:if="{{venue.phone}}" bindtap="makePhoneCall">
-        <text class="row-icon">📞</text>
+        <image class="row-icon" src="/images/lucide/phone.svg" mode="aspectFit"/>
         <text class="row-text">{{venue.phone}}</text>
         <view class="row-action call-action">
-          <text class="action-icon">📱</text>
+          <image class="action-icon" src="/images/lucide/smartphone.svg" mode="aspectFit"/>
           <text class="action-text">拨打</text>
         </view>
       </view>
       
       <!-- 营业时间 -->
       <view class="info-row">
-        <text class="row-icon">🕐</text>
+        <image class="row-icon" src="/images/lucide/clock.svg" mode="aspectFit"/>
         <text class="row-text">{{venue.hours || '06:00-22:00'}}</text>
       </view>
     </view>
@@ -47,7 +47,7 @@
     <!-- 收费标准 -->
     <view class="section-card" wx:if="{{venue.priceWeekday || venue.priceWeekend || venue.priceEvening}}">
       <view class="section-header">
-        <text class="section-icon">💰</text>
+        <image class="section-icon" src="/images/lucide/dollar-sign.svg" mode="aspectFit"/>
         <text class="section-title">收费标准</text>
       </view>
       <view class="price-list">
@@ -69,7 +69,7 @@
     <!-- 场地信息 -->
     <view class="section-card">
       <view class="section-header">
-        <text class="section-icon">🎾</text>
+        <image class="section-icon" src="/images/lucide/circle-dot.svg" mode="aspectFit"/>
         <text class="section-title">场地信息</text>
       </view>
       <view class="info-grid">
@@ -87,7 +87,7 @@
     <!-- 场馆特色 -->
     <view class="section-card" wx:if="{{tagsArray.length > 0}}">
       <view class="section-header">
-        <text class="section-icon">🏷️</text>
+        <image class="section-icon" src="/images/lucide/tag.svg" mode="aspectFit"/>
         <text class="section-title">场馆特色</text>
       </view>
       <view class="tags-wrap">
@@ -98,11 +98,11 @@
     <!-- 操作区块 -->
     <view class="action-section">
       <button class="inline-action-btn secondary {{isFavorited ? 'favorited' : ''}}" bindtap="toggleFavorite">
-        <text class="btn-icon">{{isFavorited ? '❤️' : '🤍'}}</text>
+        <image class="btn-icon" src="/images/lucide/heart.svg" mode="aspectFit"/>
         <text class="btn-text">{{isFavorited ? '已收藏' : '收藏'}}</text>
       </button>
       <button class="inline-action-btn primary" bindtap="publishMatch">
-        <text class="btn-icon">🎾</text>
+        <image class="btn-icon" src="/images/lucide/circle-dot-white.svg" mode="aspectFit"/>
         <text class="btn-text">在此约球</text>
       </button>
     </view>
@@ -128,7 +128,7 @@
 
 <!-- 错误状态 -->
 <view class="error-container" wx:if="{{error}}">
-  <text class="error-icon">⚠️</text>
+  <image class="error-icon" src="/images/lucide/circle-alert.svg" mode="aspectFit"/>
   <text class="error-text">{{error}}</text>
   <view class="retry-btn" bindtap="loadVenue">重试</view>
 </view>

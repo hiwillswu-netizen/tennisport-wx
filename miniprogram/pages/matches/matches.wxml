@@ -15,7 +15,7 @@
       >我发布的</view>
     </view>
     <view class="publish-btn" bindtap="goToPublish">
-      <text class="publish-icon">+</text>
+      <image class="publish-icon" src="/images/lucide/plus.svg" mode="aspectFit"/>
       <text class="publish-text">发布</text>
     </view>
   </view>
@@ -28,7 +28,7 @@
 
   <!-- 空状态 -->
   <view wx:elif="{{matches.length === 0}}" class="empty-state">
-    <text class="empty-icon">🎾</text>
+    <image class="empty-icon-img" src="/images/lucide/users.svg" mode="aspectFit"/>
     <text class="empty-text">{{currentTab === 'mine' ? '您还没有发布过约球' : '暂无约球信息'}}</text>
     <view class="empty-action" bindtap="goToPublish">发布约球</view>
   </view>
@@ -68,14 +68,15 @@
         <!-- 内容区 -->
         <view class="match-body">
           <view class="match-info-row">
-            <text class="info-icon">📅</text>
+            <image class="info-icon icon-img" src="/images/lucide/calendar-days.svg" mode="aspectFit"/>
             <text class="info-text">{{item.matchDate}} {{item.matchTime}}</text>
           </view>
           <view class="match-info-row">
-            <text class="info-icon">📍</text>
+            <image class="info-icon icon-img" src="/images/lucide/map-pin.svg" mode="aspectFit"/>
             <text class="info-text">{{item.venueName || '待定'}}</text>
           </view>
           <view class="match-remark" wx:if="{{item.remark}}">
+            <text class="remark-label">备注</text>
             <text class="remark-text">{{item.remark}}</text>
           </view>
         </view>

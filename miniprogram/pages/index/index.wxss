@@ -1,132 +1,165 @@
 /* pages/index/index.wxss */
+.container {
+  min-height: 100vh;
+  background:
+    linear-gradient(158deg, oklch(98% 0.035 110), oklch(95% 0.04 180) 54%, oklch(98% 0.03 78));
+}
+
 .search-bar {
-  padding: 20rpx;
-  background-color: #16a34a;
+  position: relative;
+  padding: 38rpx 24rpx 78rpx;
+  background:
+    linear-gradient(135deg, var(--tf-primary-deep), var(--tf-primary) 58%, var(--tf-accent));
+  border-bottom-left-radius: 46rpx;
+}
+
+.search-bar::after {
+  content: 'TennisFind';
+  position: absolute;
+  right: 28rpx;
+  bottom: 18rpx;
+  color: oklch(100% 0 0 / 0.18);
+  font-family: var(--tf-display);
+  font-size: 56rpx;
+  font-weight: 850;
 }
 
 .search-input-wrap {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
-  background-color: #fff;
-  border-radius: 40rpx;
-  padding: 16rpx 24rpx;
+  padding: 18rpx 24rpx;
+  background: #ffffff;
+  border: 1rpx solid oklch(100% 0 0 / 0.42);
+  border-radius: 999rpx;
+  box-shadow: 0 18rpx 48rpx oklch(20% 0.06 166 / 0.2);
 }
 
 .search-icon {
-  width: 36rpx;
-  height: 36rpx;
-  margin-right: 16rpx;
-  opacity: 0.5;
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 14rpx;
 }
 
 .search-input {
   flex: 1;
+  color: var(--tf-ink);
   font-size: 28rpx;
-  color: #333;
 }
 
-/* 快捷入口 */
 .quick-actions {
   display: flex;
   justify-content: space-around;
-  padding: 32rpx 20rpx;
-  background-color: #fff;
-  margin-bottom: 20rpx;
+  margin: -46rpx 24rpx 24rpx;
+  padding: 22rpx 12rpx;
+  background: #ffffff;
+  border: 1rpx solid oklch(92% 0.04 150);
+  border-radius: 30rpx;
+  box-shadow: 0 22rpx 54rpx var(--tf-shadow);
 }
 
 .action-item {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
 }
 
 .action-icon {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 24rpx;
   display: flex;
+  width: 96rpx;
+  height: 96rpx;
   align-items: center;
   justify-content: center;
   margin-bottom: 12rpx;
+  border-radius: 26rpx 26rpx 8rpx 26rpx;
 }
 
-.icon-text {
-  font-size: 40rpx;
-  font-weight: bold;
-  color: #fff;
+.action-icon-img {
+  width: 42rpx;
+  height: 42rpx;
 }
 
 .venue-icon {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
+  background: var(--tf-primary-soft);
 }
 
 .match-icon {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  background: oklch(93% 0.06 235);
 }
 
 .publish-icon {
-  background: linear-gradient(135deg, #ea580c, #f97316);
+  background: oklch(94% 0.08 70);
 }
 
 .profile-icon {
-  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+  background: oklch(94% 0.055 105);
 }
 
 .action-text {
+  color: var(--tf-ink-soft);
   font-size: 24rpx;
-  color: #666;
+  font-weight: 800;
 }
 
-/* 区块样式 */
 .section {
-  margin-bottom: 20rpx;
+  margin-bottom: 24rpx;
 }
 
 .section-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 24rpx 24rpx 16rpx;
-  background-color: #fff;
+  justify-content: space-between;
+  padding: 24rpx 28rpx 16rpx;
 }
 
 .section-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #333;
+  color: var(--tf-ink);
+  font-size: 34rpx;
+  font-weight: 900;
 }
 
 .section-more {
-  font-size: 26rpx;
-  color: #16a34a;
+  color: var(--tf-primary-deep);
+  font-size: 25rpx;
+  font-weight: 850;
 }
 
-/* 场馆卡片 */
-.venue-list {
-  padding: 0 20rpx;
-  background-color: #fff;
+.venue-list,
+.match-list {
+  padding: 0 24rpx;
 }
 
-.venue-card {
-  padding: 24rpx;
-  border-bottom: 1rpx solid #f0f0f0;
+.venue-card,
+.match-card {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 22rpx;
+  padding: 28rpx;
+  background: #ffffff;
+  border: 1rpx solid oklch(92% 0.04 150);
+  border-radius: 28rpx;
+  box-shadow: 0 20rpx 48rpx var(--tf-shadow);
 }
 
-.venue-card:last-child {
-  border-bottom: none;
+.venue-card:nth-child(2n),
+.match-card:nth-child(2n) {
+  margin-left: 30rpx;
+  border-top-left-radius: 8rpx;
 }
 
 .venue-name {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #333;
   margin-bottom: 8rpx;
+  color: var(--tf-ink);
+  font-size: 32rpx;
+  font-weight: 850;
 }
 
 .venue-address {
-  font-size: 26rpx;
-  color: #666;
   margin-bottom: 12rpx;
+  color: var(--tf-ink-soft);
+  font-size: 26rpx;
+  line-height: 1.5;
 }
 
 .venue-tags {
@@ -140,27 +173,12 @@
 }
 
 .price-label {
-  color: #999;
+  color: var(--tf-muted);
 }
 
 .price-value {
-  color: #ea580c;
-  font-weight: 500;
-}
-
-/* 约球卡片 */
-.match-list {
-  padding: 0 20rpx;
-  background-color: #fff;
-}
-
-.match-card {
-  padding: 24rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.match-card:last-child {
-  border-bottom: none;
+  color: var(--tf-accent-deep);
+  font-weight: 850;
 }
 
 .match-header {
@@ -172,40 +190,42 @@
 .match-avatar {
   width: 72rpx;
   height: 72rpx;
-  border-radius: 50%;
   margin-right: 16rpx;
+  border-radius: 50%;
 }
 
 .match-user-info {
   flex: 1;
+  min-width: 0;
 }
 
 .match-nickname {
-  font-size: 28rpx;
-  font-weight: 500;
-  color: #333;
   display: block;
+  color: var(--tf-ink);
+  font-size: 28rpx;
+  font-weight: 800;
 }
 
 .match-time {
+  color: var(--tf-muted);
   font-size: 24rpx;
-  color: #999;
 }
 
 .match-status {
   padding: 8rpx 16rpx;
-  border-radius: 20rpx;
+  border-radius: 999rpx;
   font-size: 22rpx;
+  font-weight: 850;
 }
 
 .status-open {
-  background-color: #dcfce7;
-  color: #16a34a;
+  color: var(--tf-primary-deep);
+  background: var(--tf-primary-soft);
 }
 
 .status-closed {
-  background-color: #f3f4f6;
-  color: #6b7280;
+  color: var(--tf-muted);
+  background: oklch(93% 0.02 160);
 }
 
 .match-content {
@@ -218,14 +238,21 @@
 }
 
 .info-label {
-  color: #999;
+  color: var(--tf-muted);
 }
 
 .info-value {
-  color: #333;
+  color: var(--tf-ink);
+}
+
+.loading,
+.empty-state {
+  padding: 42rpx 24rpx;
+  color: var(--tf-muted);
+  text-align: center;
 }
 
 .publish-btn {
-  margin-top: 24rpx;
   width: 240rpx !important;
+  margin-top: 24rpx;
 }

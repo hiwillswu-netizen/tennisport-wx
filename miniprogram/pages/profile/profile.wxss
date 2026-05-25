@@ -1,48 +1,60 @@
 /* pages/profile/profile.wxss */
 .container {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background:
+    linear-gradient(158deg, oklch(98% 0.035 110), oklch(95% 0.04 180) 54%, oklch(98% 0.03 78));
 }
 
 .user-section {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
-  padding: 60rpx 30rpx 80rpx;
+  position: relative;
+  overflow: hidden;
+  padding: 54rpx 26rpx 48rpx;
+  background:
+    linear-gradient(135deg, var(--tf-primary-deep), var(--tf-primary) 56%, var(--tf-accent));
+  border-bottom-left-radius: 46rpx;
+}
+
+.user-section::after {
+  content: '';
+  position: absolute;
+  width: 360rpx;
+  height: 132rpx;
+  right: -70rpx;
+  top: 36rpx;
+  transform: rotate(-18deg);
+  border: 2rpx solid oklch(100% 0 0 / 0.24);
+  background:
+    repeating-linear-gradient(90deg, oklch(100% 0 0 / 0.15) 0 2rpx, transparent 2rpx 28rpx),
+    repeating-linear-gradient(0deg, oklch(100% 0 0 / 0.11) 0 2rpx, transparent 2rpx 28rpx);
 }
 
 .user-card {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
 }
 
 .user-card-hover {
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
-.user-avatar {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50%;
-  border: 4rpx solid rgba(255, 255, 255, 0.3);
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-/* 头像选择按钮 - 清除所有 button 默认样式 */
 .avatar-wrapper {
-  width: 100rpx !important;
-  height: 100rpx !important;
+  display: flex !important;
+  width: 108rpx !important;
+  height: 108rpx !important;
   min-height: 0 !important;
-  padding: 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
   margin: 0 !important;
+  padding: 0 !important;
   background: transparent !important;
   border: none !important;
   border-radius: 50% !important;
   line-height: 1 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  flex-shrink: 0 !important;
 }
 
 .avatar-wrapper::after {
@@ -50,154 +62,161 @@
   border: none !important;
 }
 
-/* 登录后的头像图片 */
-.logged-avatar {
-  width: 100rpx !important;
-  height: 100rpx !important;
+.logged-avatar,
+.login-avatar {
+  width: 108rpx !important;
+  height: 108rpx !important;
   border-radius: 50% !important;
+}
+
+.logged-avatar {
   display: block !important;
-}
-
-/* 按钮内的默认头像样式 */
-.avatar-wrapper .login-avatar {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 昵称输入框 */
-.nickname-input {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 4rpx;
-  padding: 0;
-  height: 44rpx;
-  line-height: 44rpx;
-  background: transparent;
-}
-
-.nickname-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.user-info {
-  flex: 1;
-  margin-left: 24rpx;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.user-nickname {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 8rpx;
-}
-
-.user-id {
-  font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.login-card {
-  background-color: rgba(255, 255, 255, 0.15);
-  padding: 30rpx;
-  border-radius: 16rpx;
+  border: 4rpx solid oklch(100% 0 0 / 0.46);
 }
 
 .login-avatar {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
+  background: oklch(100% 0 0 / 0.18);
+  border: 4rpx solid oklch(100% 0 0 / 0.3);
 }
 
 .login-icon {
-  font-size: 48rpx;
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.nickname-input {
+  height: 46rpx;
+  margin-bottom: 6rpx;
+  padding: 0;
+  color: #233a35;
+  background: transparent;
+  font-size: 34rpx;
+  font-weight: 850;
+  line-height: 46rpx;
+}
+
+.nickname-input::placeholder {
+  color: #8a9a93;
+}
+
+.user-info {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 24rpx;
+}
+
+.login-card {
+  padding: 30rpx;
+  background: oklch(100% 0 0 / 0.15);
+  border: 1rpx solid oklch(100% 0 0 / 0.22);
+  border-radius: 30rpx;
+  box-shadow: 0 22rpx 50rpx oklch(22% 0.06 166 / 0.18);
 }
 
 .login-text {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 4rpx;
+  margin-bottom: 6rpx;
+  color: #233a35;
+  font-size: 34rpx;
+  font-weight: 850;
 }
 
 .login-tip {
+  color: #6f817a;
   font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.8);
 }
 
 .login-arrow {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 40rpx;
+  color: #5f716b;
+  font-size: 42rpx;
+}
+
+.login-card .nickname-input,
+.login-card .login-text {
+  color: #233a35;
+}
+
+.login-card .login-tip {
+  color: #6f817a;
+}
+
+.login-card .login-arrow {
+  color: #5f716b;
 }
 
 .stats-section {
   display: flex;
-  align-items: center;
-  background-color: #fff;
-  margin: -40rpx 20rpx 20rpx;
-  border-radius: 16rpx;
-  padding: 30rpx 0;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  align-items: stretch;
+  margin: 18rpx 24rpx 26rpx;
+  padding: 12rpx;
+  background: #ffffff;
+  border: 1rpx solid oklch(92% 0.04 150);
+  border-radius: 30rpx;
+  box-shadow: 0 22rpx 54rpx var(--tf-shadow);
 }
 
 .stats-item {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
-  padding: 10rpx 0;
+  padding: 24rpx 0;
+  border-radius: 22rpx;
 }
 
 .stats-item-hover {
-  background-color: #f9fafb;
+  background: oklch(95% 0.04 150);
 }
 
 .stats-divider {
   width: 1rpx;
-  height: 60rpx;
-  background-color: #f0f0f0;
+  height: 64rpx;
+  align-self: center;
+  background: oklch(90% 0.035 150);
 }
 
 .stats-value {
-  font-size: 40rpx;
-  font-weight: 600;
-  color: #16a34a;
-  margin-bottom: 8rpx;
+  margin-bottom: 6rpx;
+  color: var(--tf-primary-deep);
+  font-family: var(--tf-display);
+  font-size: 42rpx;
+  font-weight: 850;
+  line-height: 1;
 }
 
 .stats-label {
+  color: var(--tf-ink-soft);
   font-size: 24rpx;
-  color: #666;
 }
 
 .menu-section {
-  padding: 0 20rpx;
+  padding: 0 24rpx;
 }
 
 .menu-group {
-  background-color: #fff;
-  border-radius: 16rpx;
-  margin-bottom: 20rpx;
   overflow: hidden;
+  margin-bottom: 22rpx;
+  background: #ffffff;
+  border: 1rpx solid oklch(92% 0.04 150);
+  border-radius: 28rpx;
+  box-shadow: 0 18rpx 46rpx var(--tf-shadow);
+}
+
+.menu-group:nth-child(2) {
+  margin-left: 0;
+  border-top-left-radius: 28rpx;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
   padding: 30rpx;
-  border-bottom: 1rpx solid #f5f5f5;
+  border-bottom: 1rpx solid oklch(92% 0.03 150);
 }
 
 .menu-item:last-child {
@@ -205,48 +224,51 @@
 }
 
 .menu-item-hover {
-  background-color: #f9fafb;
+  background: oklch(96% 0.035 150);
 }
 
 .menu-icon {
-  font-size: 36rpx;
+  width: 36rpx;
+  height: 36rpx;
   margin-right: 20rpx;
 }
 
 .menu-title {
   flex: 1;
+  color: var(--tf-ink);
   font-size: 30rpx;
-  color: #333;
+  font-weight: 750;
 }
 
 .menu-badge {
+  display: flex;
   min-width: 36rpx;
   height: 36rpx;
-  padding: 0 10rpx;
-  background-color: #ef4444;
-  color: #fff;
-  font-size: 22rpx;
-  border-radius: 18rpx;
-  display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 16rpx;
+  padding: 0 10rpx;
+  color: oklch(100% 0 0);
+  background: var(--tf-danger);
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  font-weight: 850;
 }
 
 .menu-arrow {
+  color: var(--tf-muted);
   font-size: 32rpx;
-  color: #ccc;
 }
 
 .contact-btn {
   width: 100%;
-  background-color: transparent;
-  border: none;
-  text-align: left;
-  line-height: normal;
-  font-size: inherit;
   margin: 0;
   padding: 30rpx;
+  background: transparent;
+  border: none;
+  font-size: inherit;
+  line-height: normal;
+  text-align: left;
 }
 
 .contact-btn::after {
@@ -257,16 +279,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60rpx 0;
+  padding: 56rpx 0;
 }
 
 .version-text {
-  font-size: 24rpx;
-  color: #999;
   margin-bottom: 8rpx;
+  color: var(--tf-muted);
+  font-size: 24rpx;
 }
 
 .powered {
+  color: oklch(72% 0.025 160);
   font-size: 22rpx;
-  color: #ccc;
 }

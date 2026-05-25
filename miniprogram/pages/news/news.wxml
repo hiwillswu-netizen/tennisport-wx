@@ -12,7 +12,7 @@
     <!-- Banner 内容 -->
     <view class="banner-content">
       <view class="banner-icon-row">
-        <text class="banner-emoji">🎾</text>
+        <image class="banner-icon-img" src="/images/lucide/book-open.svg" mode="aspectFit"/>
         <text class="banner-badge">TENNIS NEWS</text>
       </view>
       <text class="banner-title">网球资讯</text>
@@ -64,7 +64,7 @@
           data-id="{{item.id}}"
           hover-class="news-card-hover"
         >
-          <!-- 顶部：分类标签 + 来源 + emoji -->
+          <!-- 顶部：分类标签 + 来源 + Lucide 图标 -->
           <view class="card-top">
             <view class="card-top-left">
               <view class="category-tag cat-{{item.categoryClass}}">
@@ -107,14 +107,14 @@
     <view class="modal-container" catchtap="stopPropagation">
 
       <!-- 弹窗顶部色条 -->
-      <view class="modal-header" style="background-color: {{modalNews.color}};">
+      <view class="modal-header cat-bg-{{modalNews.categoryClass}}">
         <view class="modal-header-deco deco-a"></view>
         <view class="modal-header-deco deco-b"></view>
-        <view class="modal-emoji-wrap">
-          <text class="modal-emoji">{{modalNews.emoji}}</text>
+        <view class="modal-icon-wrap">
+          <image class="modal-icon-img" src="{{modalNews.iconPath}}" mode="aspectFit"/>
         </view>
         <view class="modal-close-btn" bindtap="closeModal">
-          <text class="modal-close-icon">✕</text>
+          <image class="modal-close-icon" src="/images/lucide/x.svg" mode="aspectFit"/>
         </view>
       </view>
 
@@ -138,9 +138,11 @@
       <!-- 底部按钮 -->
       <view class="modal-actions">
         <view class="modal-close-action" bindtap="closeModal">
+          <image class="modal-action-icon" src="/images/lucide/x.svg" mode="aspectFit"/>
           <text class="modal-close-action-text">关闭</text>
         </view>
         <button class="modal-share-btn" open-type="share">
+          <image class="modal-action-icon" src="/images/lucide/share-2.svg" mode="aspectFit"/>
           <text class="modal-share-text">分享</text>
         </button>
       </view>
